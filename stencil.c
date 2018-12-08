@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 
-  print("Current processor identifier: %d out of %d", rank, size );
+  printf("Current processor identifier: %d out of %d", rank, size );
 
 
   
