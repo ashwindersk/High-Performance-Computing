@@ -36,6 +36,24 @@ int main(int argc, char *argv[]) {
   // Set the input image
   init_image(nx, ny, image, tmp_image);
 
+
+  //Figuring out which processors are involved in the computation 
+  MPI_Init(&argc, &argv);
+
+  int size;
+  int rank;
+
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+  
+  print("Current processor identifier: %d out of %d", rank, size );
+
+
+  
+
+
+
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
