@@ -1,0 +1,245 @@
+
+#Include the header file 
+#include "mpi.h"
+
+#Makefile
+stencil.c: stencil.c mpicc -o $@ $^
+
+
+
+
+
+#Sample MPI commands and explanations
+
+
+
+#MPI data types
+
+MPI_SHORT				short int
+MPI_INT					int
+MPI_LONG				long int
+MPI_LONG_LONG			long long int
+MPI_UNSIGNED_CHAR		unsigned char
+MPI_UNSIGNED_SHORT		unsigned short int
+MPI_UNSIGNED			unsigned int
+MPI_UNSIGNED_LONG		unsigned long int
+MPI_UNSIGNED_LONG_LONG	unsigned long long int
+MPI_FLOAT				float
+MPI_DOUBLE				double
+MPI_LONG_DOUBLE			long double
+MPI_BYTE				char
+
+
+
+#Find the rank of the processor calling MPI_Comm_rank
+int processorRank;
+MPI_Comm_rank(MPI_COMM_RANK, &processorRank);
+
+
+#Find the number of processors that are communicating
+int worldSize;
+MPI_Comm_size(MPI_COMM_WORLD, &worldSize);
+
+
+MPI_send(message /* the address to the buffered message (choice of any data type)*/,
+		 length /* length of the message, so count of the size (natural number)*/, 
+		  MPI_CHAR /* MPI has its own types, (choice of data type) */,
+		  dest /* rank of the destination (int) */,
+		  tag /* optional tag to signify what the message is about */ ,
+		  MPI_COMM_WORLD)
+
+
+
+#Example of MPI_Send();
+
+	#Using the processorRank and worldSize variables above
+
+	int number;
+
+	if(processorRank ==0    /* if the processor is that is executing this is a master processor){
+		number =-1;
+		MPI_Send(&number /* address of buffer */,
+		1 /* size of message /*, 
+		MPI_INT /* MPI Data type */,
+		1 /* destination processor rank number */,
+		0 /* tag of message */,
+		MPI_COMM_WORLD);
+
+
+	}
+
+	else if (processorRank == 1){
+		MPI_Recv(&number, 1, MPI_INT, 1, 0, MPI_COMM_WORLD)
+
+	} 
+
+	
+# Example Finished 
+
+#Each processor is running this executable across the world
+
+
+#Point to Point Messaging techniques
+
+#MPI_Ssend(buffer, ..);
+	
+	#buffer has to be contiguous, so wrap a 2D array into one row
+
+	#Ssend means synchronous - meaning you have to have a sending and matching receiving call
+
+	#we will run the same program on all the processors, but control the functionality using conditionals
+
+	#Blocking means that the program will not continue until the arguments are safe for reuse, e.g buffer needs to actually be received 
+
+	#Only will return when the matching receive has gotten the data 
+
+
+	#Pros 
+		# This is safe, and portable 
+		
+	#Cons
+		#processes may be idle waiting to receive or waiting whilst its message is received, impacts the performance, affects the "load balance", how balanced the work is amonst the processors, ideally equally. 
+
+
+
+
+#MPI_Send();
+	
+	#blocking too, but potentially asynchronous
+
+	#Why potentially asynchronous? Some MPI implementations use system buffers, but some dont. 
+
+	#System-buffer means that the call will return when the message is copied from the user-space to the system buffer, which technically means that the variable in the original buffer can be re-used in the code because the Send() will use the variable in the system buffer, which means that it is safe to continue on in the program - breaks the asynchronous aspect of the function call
+
+
+	#Without the system buffer, Send() will behave like SSend();
+
+
+	#Pros
+
+		#Asynchronous
+
+
+
+	#Cons 
+
+		#Alot of overhead because you could be constantly copying a large amount of memory into system buffers all the time, which adds up. 
+
+		#May become sloppy in terms of your program design. If p1 and p2 are both using Send() and expecting to use System buffer to then receive on the next line, what if you run this program on a cluster that does not have the correct MPI implmentation, then both the Send()'s act like a synchronouse one and they both deadlock because they expect a receive. 
+
+		#For Blue Crystal design your communication patterns well, and the issue wont be a problem
+
+
+
+
+	
+#MPI_Bsend()
+	
+	#If you definitely want a buffer, but dont want to rely on a system buffer
+
+	#Asynchronous
+
+	#But the programmer initialises this buffer and put it in the program
+
+	#P1
+	-> MPI_Buffer_attach() 
+	-> MPI_Bsend() /* using the buffer */
+	
+	#P2
+	-> MPI_Recv()
+
+	#P1
+	-> MPI_buffer_detatch()
+
+
+	#Pros 
+		#Aysnchronous
+
+	#Cons
+		#Allocating memory is expensive
+		#complexity in code
+		#Differing MPI calls have differing rules around attach and detach calls
+
+
+
+
+#MPI_Isend()
+	
+	#MPI_Irecv() - is the counter function
+
+	#Nonblocking function call, but the variables arent safe for reuse, so have to check later on if the message has sent, sort of like a 'request'
+
+	#You need to use MPI_Wait() to check if the vxariables are safe to reuse. Blocking call, until the communication has happened, so that it is safe to use the variables
+
+
+
+	#complicated code 
+
+
+#Explore some others in documentation
+
+
+
+
+#MPI built in communication patterns 
+	
+	#Example, a Message Exchange, MPI_Sendrecv()
+			  Broadcast 
+			  Scatter
+			  Gather
+			  Reduction
+			  Gatherv - doesnt need the different parts to be equal in size
+
+
+#The fact that the buffer has to be contiguous, implies that the contents of the buffer (array) have to be the same data type, but if you want the data types to vary in the array, you can use some MPI features
+
+	# Packed data messages
+	# MPI derived types 
+
+	# MPI_Pack()
+		- Fill array with copies of the variables of different types  
+		- Use MPI_Unpack() to be unpacked on the other end
+
+		- Overhead as many copies are made
+
+	# Derived types 
+		- C structs may not be contiguous
+		- So there is an MPI solution to construct an array of pairs
+		{(t_0, d_0),(t_1, d_1),(t_2, d_2),..,(t_n-1, d_n-1)}
+
+		- t_x is the data type
+		- d_x is the displacement in bytes from the base address
+
+		#Process
+			-> Declare variable x_i
+			-> MPI_Address(x_i, ..) = base address
+			-> See example 6 for MPI example codes in the github
+
+
+	#MPI_Type_Vector 		
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
