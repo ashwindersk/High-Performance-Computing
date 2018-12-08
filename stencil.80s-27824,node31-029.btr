@@ -1,0 +1,7 @@
+
+stencil:27824 terminated with signal 11 at PC=2aaaaade35e4 SP=7fffffffc290.  Backtrace:
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_memory_ptmalloc2_int_free+0x74)[0x2aaaaade35e4]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_memory_ptmalloc2_free+0xb0)[0x2aaaaade53a0]
+stencil(main+0x881)[0x402661]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401c69]
