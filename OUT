@@ -1,0 +1,10 @@
+Running on host node31-029
+Time is Sat Dec 8 16:25:49 GMT 2018
+Directory is /panfs/panasas01/cosc/ak16625/High-Performance-Computing
+PBS job ID is 7795885.master.cm.cluster
+This jobs runs on the following machines:
+
+Hello, world; from host node31-029: process 3 of 4
+Hello, world; from host node31-029: process 1 of 4
+Hello, world; from host node31-029: process 2 of 4
+Hello, world; from host node31-029: process 0 of 4

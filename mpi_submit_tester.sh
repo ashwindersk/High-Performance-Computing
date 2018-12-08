@@ -9,10 +9,10 @@
 #PBS -m a
 
 #! application name
-application="stencil"
+application="hello_world"
 
 #! Run options for the application
-options="1024 1024 100"
+options=""
 
 ###############################################################
 ### You should not have to change anything below this line ####

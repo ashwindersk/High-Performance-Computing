@@ -1,0 +1,10 @@
+/panfs/panasas01/cosc/ak16625/.bash_profile: line 16: T: command not found
+/panfs/panasas01/cosc/ak16625/.bash_profile: line 18: alias: mpirun -np 4 ./stencil: not found
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not find an executable:
+
+Executable: stencil.exe
+Node: node31-029
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------

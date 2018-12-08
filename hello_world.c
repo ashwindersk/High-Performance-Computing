@@ -51,4 +51,4 @@ int main(int argc, char* argv[])
 
   /* and exit the program */
   return EXIT_SUCCESS;
-}x
+}
