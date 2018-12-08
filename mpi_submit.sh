@@ -9,7 +9,7 @@
 #PBS -m a
 
 #! application name
-application="send_recv.exe"
+application="stencil.exe"
 
 #! Run options for the application
 options=""
@@ -27,7 +27,7 @@ echo Time is `date`
 echo Directory is `pwd`
 echo PBS job ID is $PBS_JOBID
 echo This jobs runs on the following machines:
-echo `cat $PBS_NODEFILE | uniq`
+echo `cat $PBS_NODEFZZILE | uniq`
  
 #! Create a machine file for MPI
 cat $PBS_NODEFILE > machine.file.$PBS_JOBID
