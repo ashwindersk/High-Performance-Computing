@@ -106,8 +106,8 @@ if(rank ==0){
   lastRowSend= extractElements(lastRowSend, image, start, end);
 
   float * lastRowRecv = malloc(nx*sizeof(float));  
-  
-  MPI_Sendrecv(firstRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+  MPI_Status * status;
+  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   
   
 }
@@ -138,14 +138,15 @@ else if(rank >0 && rank < 15){
 else{
 
   //sending the first row of the array to rank 14;
-  int start = 0
-  int end   = nx-1
+  int start = 0;
+  int end   = nx-1;
   
   float * firstRowSend = malloc(nx*sizeof(float));
   firstRowSend= extractElements(firstRowSend, image, start, end);
 
   float * firstRowRecv = malloc(nx*sizeof(float));  
   
+  MPI_Status * status;
   MPI_Sendrecv(firstRowSend,  nx, MPI_FLOAT, rank-1, 0,firstRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   
 
