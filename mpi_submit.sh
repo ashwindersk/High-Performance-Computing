@@ -1,9 +1,9 @@
 #!/bin/bash 
 
 #PBS -N MPI
-#PBS -o OUT
+#PBS -o stencil_output
 #PBS -q teaching
-#PBS -l nodes=1:ppn=16,walltime=00:05:00
+#PBS -l nodes=1:ppn=16,walltime=00:10:00
 
 #! Mail to user if job aborts
 #PBS -m a
