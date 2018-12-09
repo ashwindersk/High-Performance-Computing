@@ -29,12 +29,7 @@ int main(int argc, char *argv[]) {
   int niters = atoi(argv[3]);
 
   // Allocate the images
-  float *image =_mm_malloc(sizeof(float)*ny*nx,64);
-
-  float *tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
-
-  // Set the input image
-  init_image(nx, ny, image, tmp_image);
+  
 
 
 
@@ -48,25 +43,33 @@ int main(int argc, char *argv[]) {
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 
-  // int start = ((rank/16)*ny * ny);
-  // int end = ny* (((rank+1)/16 )*ny -1) + nx-1;
+  if(rank ==0){
+    float *image =_mm_malloc(sizeof(float)*ny*nx,64);
 
-  // int numElements = (end - start + 1);
-  // int numBytes = sizeof(float) * numElements;
+    float *tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
 
-  // float *slice = malloc(numBytes);
-  // float *sliceTemp = malloc(numBytes);
+    // Set the input image
+    init_image(nx, ny, image, tmp_image);
+  }
+  int sectionSize = ny*nx/16;
 
-  // memcpy(slice, image + start, numBytes);
-  // memcpy(sliceTemp, tmp_image + start, numBytes);
+
+  int *bufferImg = malloc((ny*nx/16) *sizeof(float) );
+  int *bufferTempImg = malloc((ny*nx/16) *sizeof(float) );
+
+  
+  MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT, 0, MPI_COMM_WORLD );
+
+
+
 
 
   
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
-    stencil(nx, ny, image, tmp_image);
-    stencil(nx, ny, tmp_image, image);
+    stencil(nx, ny/16, bufferImg, bufferTempImg);
+    stencil(nx, ny/16, bufferTempImg, bufferImg);
   }
   double toc = wtime();
 
@@ -80,82 +83,51 @@ int main(int argc, char *argv[]) {
   free(image);
 }
 
-void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
+void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image) {
   
- int i, rank, size;
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  MPI_Comm_size(MPI_COMM_WORLD, &size);
-  
-  const int sectionSize = ny*nx/16;
-  int* sendbuf;
-  // Only root initializes the sendbuf. Root is scattering an array of length=num_procs * 4
-  // to each rank in MPI_COMM_WORLD. Hence, each rank will receive 4 integers after MPI_Scatter call.
-  if(rank ==0) {
-    sendbuf = (int*) malloc(sizeof(int) * size * sectionSize);
-    for(i=0; i<size * sectionSize; i++) sendbuf[i] = i;
-  }
-  // Note that although the recvbuf at each rank is of size = sectionSize, the recvcnt in MPI_Scatter 
-  // is 1 instead of sectionSize. This is possible by creating a user defined datatype "my_own_datatype"
-  // that is effectively an structure containing sectionSize integers (contiguous).
-  int recvbuf[sectionSize];
-  MPI_Datatype my_own_datatype; // Declaring the user defined datatype
-  MPI_Type_contiguous(sectionSize, MPI_INT, &my_own_datatype); // specifying to runtime that this datatype is contiguous
-  MPI_Type_commit(&my_own_datatype); // A datatype can only be communicated once its committed (saved).
-  
-  // Although the sendcnt and recvcnt is different, its important to note that total bytes
-  // sent by the root is equal to the sum of total bytes recevied at all processes in MPI_COMM_WORLD.
-  int sendcnt = sectionSize;
-  int recvcnt = 1; 
-  int * dataSize;
-  MPI_Type_size(my_own_datatype, dataSize);
-  
-  MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, sendcnt, MPI_INT, 0, MPI_COMM_WORLD); 
-  
-  for( int i = 0 ; i< sectionSize ;i++){
-    printf("%d\n", recvbuf[i]);
-  }
 
 
-  //manually amending the values of the corners
- tmp_image[0]                   = 0.6f * image[0]                  + 0.1f*image[1 + ny*0]                  + 0.1f*image[0 + ny*1];
- tmp_image[nx-1 + ny*0]         = 0.6f * image[nx-1 + ny*0]        + 0.1f*image[nx-2 + ny*0]               + 0.1f*image[nx-1 + ny*1];
- tmp_image[0 + ny*(nx-1)]       = 0.6f * image[0 + ny*(ny-1)]      + 0.1f*image[0 +ny*(ny-2)]              + 0.1f*image[(1 + ny*(ny-1))];
- tmp_image[nx-1 + (ny)*(ny-1)]  = 0.6f * image[nx-1 + (ny)*(ny-1)] + 0.1f*image[nx-1 + (ny)*(nx-2)]        + 0.1f*image[nx-2 +(nx-1)*(ny)];
+
+//   //manually amending the values of the corners
+//  tmp_image[0]                   = 0.6f * image[0]                  + 0.1f*image[1 + ny*0]                  + 0.1f*image[0 + ny*1];
+//  tmp_image[nx-1 + ny*0]         = 0.6f * image[nx-1 + ny*0]        + 0.1f*image[nx-2 + ny*0]               + 0.1f*image[nx-1 + ny*1];
+//  tmp_image[0 + ny*(nx-1)]       = 0.6f * image[0 + ny*(ny-1)]      + 0.1f*image[0 +ny*(ny-2)]              + 0.1f*image[(1 + ny*(ny-1))];
+//  tmp_image[nx-1 + (ny)*(ny-1)]  = 0.6f * image[nx-1 + (ny)*(ny-1)] + 0.1f*image[nx-1 + (ny)*(nx-2)]        + 0.1f*image[nx-2 +(nx-1)*(ny)];
 
 
-  //top row
-  for(int j = 1; j<nx-1; ++j){
-    tmp_image[j+ny*0] = 0.1f*image[j-1 + ny*0] + 0.6f*image[j+ny*0]  + 0.1f*image[j+1 + ny*0] + 0.1f*image[j+ny*1];
-  }
+//   //top row
+//   for(int j = 1; j<nx-1; ++j){
+//     tmp_image[j+ny*0] = 0.1f*image[j-1 + ny*0] + 0.6f*image[j+ny*0]  + 0.1f*image[j+1 + ny*0] + 0.1f*image[j+ny*1];
+//   }
 
-  //first column
-  for(int i = 1; i< ny-1 ; ++i){
-   tmp_image[0+ny*i] = 0.6f*image[0+ny*i] + 0.1f*image[1+ ny*i] + 0.1f*image[0+ny*(i-1)] + 0.1f*image[0 + ny*(i+1)];
-  }
+//   //first column
+//   for(int i = 1; i< ny-1 ; ++i){
+//    tmp_image[0+ny*i] = 0.6f*image[0+ny*i] + 0.1f*image[1+ ny*i] + 0.1f*image[0+ny*(i-1)] + 0.1f*image[0 + ny*(i+1)];
+//   }
 
-  //editing the values of the (ny-1)*(nx-1) pisxels
-  for(int i = 1 ; i<ny-1; ++i){
-   for(int j = 1 ; j<nx-1; ++j){
-     int base = j+ny*i;
-     __assume_aligned(image,64);
-     __assume_aligned(tmp_image,64);
-     #pragma omp simd
+//   //editing the values of the (ny-1)*(nx-1) pisxels
+//   for(int i = 1 ; i<ny-1; ++i){
+//    for(int j = 1 ; j<nx-1; ++j){
+//      int base = j+ny*i;
+//      __assume_aligned(image,64);
+//      __assume_aligned(tmp_image,64);
+//      #pragma omp simd
      
-     tmp_image[base] = image[base-1]*0.1f   + image[base]*0.6f + image[base+1]*0.1f + image[base -ny]*0.1f + image[base +ny]*0.1f;
-   }
-  }
-  //last column
-  for(int i = 1; i< ny-1 ; ++i){
-    int base  = nx-1 + ny*i;
-    tmp_image[base] = 0.6f*image[base] + 0.1f*image[base-1] + 0.1f*image[base -ny] + 0.1f*image[base + ny];
-  }
+//      tmp_image[base] = image[base-1]*0.1f   + image[base]*0.6f + image[base+1]*0.1f + image[base -ny]*0.1f + image[base +ny]*0.1f;
+//    }
+//   }
+//   //last column
+//   for(int i = 1; i< ny-1 ; ++i){
+//     int base  = nx-1 + ny*i;
+//     tmp_image[base] = 0.6f*image[base] + 0.1f*image[base-1] + 0.1f*image[base -ny] + 0.1f*image[base + ny];
+//   }
 
 
-  //last row
-  for(int j = 1; j<nx-1; ++j){
-   tmp_image[j + ny*(nx-1)] = 0.6f*image[j+ ny*(nx-1)] + 0.1f*image[(j-1)+ ny*(nx-1)] + 0.1f*image[(j+1)+ ny*(nx-1)] + 0.1f*image[j+ ny*(nx-2)];
-  }
-  MPI_Finalize();
+//   //last row
+//   for(int j = 1; j<nx-1; ++j){
+//    tmp_image[j + ny*(nx-1)] = 0.6f*image[j+ ny*(nx-1)] + 0.1f*image[(j-1)+ ny*(nx-1)] + 0.1f*image[(j+1)+ ny*(nx-1)] + 0.1f*image[j+ ny*(nx-2)];
+//   }
+  
  }
 
 // Create the input image
