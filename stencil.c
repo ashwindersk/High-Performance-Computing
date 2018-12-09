@@ -87,13 +87,13 @@ int main(int argc, char *argv[]) {
 
 float* extractElements(float * subArray, float * array, int start, int end)
 {
-    int count = 0;
-    for (int i = start; i < end ; i++)
+    
+    for (int i = start; i <= end ; i++)
     {
         subArray[i-start] = array[i];
-        count++;
+        
     }
-    printf("number of elements in subarray is: %d", count);
+    
     return subArray;
 }
 void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image,int rank) {
@@ -110,8 +110,9 @@ if(rank ==0){
 
   float * lastRowRecv = malloc(nx*sizeof(float));  
   MPI_Status * status;
-  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   
+  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+  printf("deadlock 0");
   
 }
 else if(rank >0 && rank < 15){
@@ -135,7 +136,9 @@ else if(rank >0 && rank < 15){
   //Sending and receving data from each rank above and below in the image
   MPI_Status * status;
   MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
+  printf("deadlock 1");
   MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+  printf("deadlock 2");
 
 }
 else{
@@ -151,6 +154,7 @@ else{
   
   MPI_Status * status;
   MPI_Sendrecv(firstRowSend,  nx, MPI_FLOAT, rank-1, 0,firstRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+  printf("deadlock 4");
   
 
 }
