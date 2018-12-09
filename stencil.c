@@ -84,7 +84,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
   int size = ny*nx/16;
   float* buffer=NULL;
-  int sixteen[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+  int *sixteen[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
   int * tester =NULL;
 
   int root =0 ;
@@ -98,7 +98,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   
   // else if( rank >0 && rank < 15){  
   
-  printf("Current rank %d, tester buffer %d",rank, tester[4]);
+  printf("Current rank %d, tester buffer %d\n",rank, tester[4]);
   // printf("Current rank %d , buffer value %f", rank, buffer[0]);
   
 
