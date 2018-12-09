@@ -109,14 +109,14 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, recvcnt, my_own_datatype, 0, MPI_COMM_WORLD);
 
   // Print the message received at each rank
-  char msg[100];
-  sprintf(msg,"Rank %d: ", rank);
-  for(i=0; i<sectionSize; i++){
-    sprintf(msg + strlen(msg),"%d ", recvbuf[i]);
-  }
-  sprintf(msg + strlen(msg),"\n");
-  printf("%s",msg);
-  fflush(stdout);
+  // char msg[100];
+  // sprintf(msg,"Rank %d: ", rank);
+  // for(i=0; i<sectionSize; i++){
+  //   sprintf(msg + strlen(msg),"%d ", recvbuf[i]);
+  // }
+  // sprintf(msg + strlen(msg),"\n");
+  // printf("%s",msg);
+  // fflush(stdout);
  
   
 
