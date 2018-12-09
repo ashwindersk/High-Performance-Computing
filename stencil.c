@@ -126,10 +126,12 @@ else if(rank >0 && rank < 15){
   lastRowSend      = extractElements(lastRowSend, image,lastRowStart, lastRowStart );
 
 
-  MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, rank-1, MPI_COMM_WORLD);
-  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, rank+1, MPI_COMM_WORLD);
+  //Sending and receving data from each rank above and below in the image
+  MPI_Status * status;
+  MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, rank-1, MPI_COMM_WORLD, status);
+  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, rank+1, MPI_COMM_WORLD, status);
 
-  
+
   
 
  
