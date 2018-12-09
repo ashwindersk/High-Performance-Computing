@@ -10,7 +10,7 @@
 
 
 
-void stencil(const int nx, const int ny, float * image, float * tmp_image, int rank);
+void stencil(const int nx, const int ny, float * image, float * tmp_image);
 void init_image(const int nx, const int ny, float * image, float * tmp_image);
 void output_image(const char * file_name, const int nx, const int ny, float *image);
 double wtime(void);
@@ -80,37 +80,38 @@ int main(int argc, char *argv[]) {
   free(image);
 }
 
-void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
+void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
   
  int i, rank, size;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
  
+  const int sectionSize = ny*nx/16;
   int* sendbuf;
   // Only root initializes the sendbuf. Root is scattering an array of length=num_procs * 4
   // to each rank in MPI_COMM_WORLD. Hence, each rank will receive 4 integers after MPI_Scatter call.
   if(rank ==0) {
-    sendbuf = (int*) malloc(sizeof(int) * size * 4);
-    for(i=0; i<size * 4; i++) sendbuf[i] = i;
+    sendbuf = (int*) malloc(sizeof(int) * size * sectionSize);
+    for(i=0; i<size * sectionSize; i++) sendbuf[i] = i;
   }
-  // Note that although the recvbuf at each rank is of size = 4, the recvcnt in MPI_Scatter 
-  // is 1 instead of 4. This is possible by creating a user defined datatype "my_own_datatype"
-  // that is effectively an structure containing 4 integers (contiguous).
-  int recvbuf[4];
+  // Note that although the recvbuf at each rank is of size = sectionSize, the recvcnt in MPI_Scatter 
+  // is 1 instead of sectionSize. This is possible by creating a user defined datatype "my_own_datatype"
+  // that is effectively an structure containing sectionSize integers (contiguous).
+  int recvbuf[sectionSize];
   MPI_Datatype my_own_datatype; // Declaring the user defined datatype
-  MPI_Type_contiguous(4, MPI_INT, &my_own_datatype); // specifying to runtime that this datatype is contiguous
+  MPI_Type_contiguous(sectionSize, MPI_INT, &my_own_datatype); // specifying to runtime that this datatype is contiguous
   MPI_Type_commit(&my_own_datatype); // A datatype can only be communicated once its committed (saved).
   
   // Although the sendcnt and recvcnt is different, its important to note that total bytes
   // sent by the root is equal to the sum of total bytes recevied at all processes in MPI_COMM_WORLD.
-  int sendcnt = 4;
+  int sendcnt = sectionSize;
   int recvcnt = 1; 
   MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, recvcnt, my_own_datatype, 0, MPI_COMM_WORLD);
 
   // Print the message received at each rank
   char msg[100];
   sprintf(msg,"Rank %d: ", rank);
-  for(i=0; i<4; i++){
+  for(i=0; i<sectionSize; i++){
     sprintf(msg + strlen(msg),"%d ", recvbuf[i]);
   }
   sprintf(msg + strlen(msg),"\n");
