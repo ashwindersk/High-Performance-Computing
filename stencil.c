@@ -103,7 +103,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Status *status;
 
     //MPI_Sendrecv(&lastRowSend, nx, MPI_FLOAT, rank + 1, 0, &lastRowRecv, nx, MPI_FLOAT, rank, 0, MPI_COMM_WORLD, status);
-    MPI_Send(lastRowSend, nx, MPI_FLOAT, rank +1, 0, MPI_COMM_WORLD);
+    MPI_Send(lastRowSend, nx, rank +1, MPI_FLOAT, 0, MPI_COMM_WORLD);
     MPI_Recv(lastRowRecv, nx, rank+1, 0, MPI_COMM_WORLD, status);
 
     printf("deadlock 0");
@@ -130,7 +130,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //Sending and receving data from each rank above and below in the image
     MPI_Status *status;
     printf("deadlock 1.1 and rank %d\n", rank);
-    MPI_Recv(firstRowRecv, nx, rank-1, 0, MPI_COMM_WORLD, status);
+    MPI_Recv(firstRowRecv, nx, rank-1, MPI_FLOAT, 0, MPI_COMM_WORLD, status);
     MPI_Send(firstRowSend, nx, MPI_FLOAT, rank -1, 0, MPI_COMM_WORLD);
 
 
