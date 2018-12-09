@@ -60,7 +60,8 @@ int main(int argc, char *argv[]) {
 
   
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT, 0, MPI_COMM_WORLD );
-
+  
+  printf("Current rank is %d and first value of buffer is %f", bufferImg[0] );
 
 
 
