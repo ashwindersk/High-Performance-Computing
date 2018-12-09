@@ -103,7 +103,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   
   // else if( rank >0 && rank < 15){  
   
-  printf("buffer value %d ", *tester);
+  
   
 
   
