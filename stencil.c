@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
   printf("current ranking is %d\n", rank);
   // Call the stencil kernel
   double tic = wtime();
-  for (int t = 0; t < niters; ++t) {}
+  for (int t = 0; t < niters; ++t) {
     stencil(nx, ny, image, tmp_image, rank);
     stencil(nx, ny, tmp_image, image, rank);
   }
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
-  printf("rank that gets into stencil %d\n", rank);ZZ
+  printf("rank that gets into stencil %d\n", rank);
   int size = ny*nx/16;
   float* buffer=NULL;
  
