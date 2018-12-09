@@ -95,10 +95,10 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
     printf("Current Rank is %d", rank);
     for( int i =0 ; i< size ; i++){
-    printf("value is %f", buffer[i]);
+      //printf("value is %f", buffer[i]);
+    }
+
   }
-
-
     // int start = 0 ;
     // int end = nx-1;
     // int numElements = end-start + 1;
@@ -122,7 +122,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
     // MPI_Recv()
 
-  }
+  
 
 
 
