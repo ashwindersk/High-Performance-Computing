@@ -85,7 +85,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
  int i, rank, size;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
-  print("%d", size);
+  
   const int sectionSize = ny*nx/16;
   int* sendbuf;
   // Only root initializes the sendbuf. Root is scattering an array of length=num_procs * 4
@@ -106,7 +106,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   // sent by the root is equal to the sum of total bytes recevied at all processes in MPI_COMM_WORLD.
   int sendcnt = sectionSize;
   int recvcnt = 1; 
-  MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, sendcnt, my_own_datatype, 0, MPI_COMM_WORLD);
+  MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, 4ZZ, my_own_datatype, 0, MPI_COMM_WORLD);
 
   // Print the message received at each rank
   // char msg[100];
