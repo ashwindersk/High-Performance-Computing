@@ -70,8 +70,8 @@ int main(int argc, char *argv[]) {
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
-    stencil(nx, ny/16, bufferImg, bufferTempImg);
-    stencil(nx, ny/16, bufferTempImg, bufferImg);
+    stencil(nx, ny/16, bufferImg, bufferTempImg, rank);
+    stencil(nx, ny/16, bufferTempImg, bufferImg,rank);
   }
   double toc = wtime();
 
@@ -91,7 +91,7 @@ int sectionSize= 16*nx * 16 *ny /16;
 
 if(rank ==0){
   for( int i = 0; i< sectionSize; i++){
-    printf("buffer value %f \n", buffer[i]);
+    printf("buffer value %f \n", image[i]);
   }
 }
 
