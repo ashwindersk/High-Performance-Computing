@@ -84,16 +84,21 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
   int size = ny*nx/16;
   float* buffer=NULL;
+  int sixteen[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+  int * tester = malloc(16 * sizeof(int));
 
+  int root =0 ;
   if(rank == 0 ){
     buffer= malloc(size * sizeof(float));
   }
 
-  MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
+ // MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
+  MPI_Scatter(sixteen, 1 , MPI_INT , tester, 1 ,MPI_INT , root, MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
   
   // else if( rank >0 && rank < 15){  
   
-  printf("Current rank %d , buffer value %f", rank, buffer[0]);
+  printf("Current rank %d, tester buffer %d", tester[4]);
+  // printf("Current rank %d , buffer value %f", rank, buffer[0]);
   
 
   
