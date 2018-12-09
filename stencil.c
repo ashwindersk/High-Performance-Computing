@@ -105,9 +105,45 @@ if(rank ==0){
   float * slice = malloc(nx*sizeof(float));
   slice= extractElements(slice, image, start, end);
 
+  MPI_Send(slice, nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
+  
+}
+else if(rank >0 && rank < 15){
+
+
+  float *firstRowRecv = malloc(nx*sizeof(float));
+  float *lastRowRecv  = malloc(nx*sizeof(float));
+
+  float *firstRowSend = malloc(nx*sizeof(float));
+  float *lastRowSend  = malloc(nx*sizeof(float));
+
+  int firstRowStart = 0;
+  int firstRowEnd   = nx-1;
+
+  int lastRowStart = (ny-1) * nx;
+  int lastRowEnd   = (ny-1) * nx + nx-1;
+  firstRowSend     = extractElements(firstRowSend, image,firstRowStart, firstRowEnd );
+  lastRowSend      = extractElements(lastRowSend, image,lastRowStart, lastRowStart );
+
+
+  MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, rank-1, MPI_COMM_WORLD);
+  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, rank+1, MPI_COMM_WORLD);
+
+  
+  
+
+ 
+  
+
+
+
+
 
 
 }
+
+
+
 
 
 //   //manually amending the values of the corners
