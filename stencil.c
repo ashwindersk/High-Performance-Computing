@@ -113,9 +113,8 @@ if(rank ==0){
   
   MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   printf("deadlock 0\n");
-  for(int i = 0 ; i< nx ; i++){
-    printf("received row values : %f\n", lastRowRecv[i]);
-  }
+  
+  
   
 }
 else if(rank >0 && rank < 15){
@@ -140,6 +139,11 @@ else if(rank >0 && rank < 15){
   MPI_Status * status;
   printf("deadlock 1.1 and rank %d\n", rank);
   MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
+  if(rank ==1){
+    for( int i ; i< nx ; i++){
+      printf("received row value %f\n " firstRowRecv);
+    }
+  }
   printf("deadlock 1.2 and rank %d\n", rank);
   MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   printf("deadlock 2 and rank %d\n", rank);
