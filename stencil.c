@@ -123,7 +123,7 @@ else if(rank >0 && rank < 15){
   int lastRowStart = (ny-1) * nx;
   int lastRowEnd   = (ny-1) * nx + nx-1;
   firstRowSend     = extractElements(firstRowSend, image,firstRowStart, firstRowEnd );
-  lastRowSend      = extractElements(lastRowSend, image,lastRowStart, lastRowStart );
+  lastRowSend      = extractElements(lastRowSend, image,lastRowStart, lastRowEnd );
 
 
   //Sending and receving data from each rank above and below in the image
