@@ -101,11 +101,14 @@ if(rank ==0){
   //sending the last row of the array to rank 1;
   int start = (ny-1) * nx;
   int end   = (ny-1) * nx + nx-1;
-  
-  float * slice = malloc(nx*sizeof(float));
-  slice= extractElements(slice, image, start, end);
+    
+  float * lastRowSend = malloc(nx*sizeof(float));
+  lastRowSend= extractElements(lastRowSend, image, start, end);
 
-  MPI_Send(slice, nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
+  float * lastRowRecv = malloc(nx*sizeof(float));  
+  
+  MPI_Sendrecv(firstRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+  
   
 }
 else if(rank >0 && rank < 15){
@@ -128,19 +131,23 @@ else if(rank >0 && rank < 15){
 
   //Sending and receving data from each rank above and below in the image
   MPI_Status * status;
-  MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, rank-1, MPI_COMM_WORLD, status);
-  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, rank+1, MPI_COMM_WORLD, status);
+  MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
+  MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
 
+}
+else{
 
+  //sending the first row of the array to rank 14;
+  int start = 0
+  int end   = nx-1
   
+  float * firstRowSend = malloc(nx*sizeof(float));
+  firstRowSend= extractElements(firstRowSend, image, start, end);
 
- 
+  float * firstRowRecv = malloc(nx*sizeof(float));  
   
-
-
-
-
-
+  MPI_Sendrecv(firstRowSend,  nx, MPI_FLOAT, rank-1, 0,firstRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+  
 
 }
 
