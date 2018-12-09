@@ -85,7 +85,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
  int i, rank, size;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
- 
+  print("%d", size);
   const int sectionSize = ny*nx/16;
   int* sendbuf;
   // Only root initializes the sendbuf. Root is scattering an array of length=num_procs * 4
