@@ -51,14 +51,14 @@ int main(int argc, char *argv[]) {
   int start = ((rank/16)*ny * ny);
   int end = ny* (((rank+1)/16 )*ny -1) + nx-1;
 
-  int numElements = (end - start + 1)
+  int numElements = (end - start + 1);
   int numBytes = sizeof(float) * numElements;
 
   float *slice = malloc(numBytes);
   float *sliceTemp = malloc(numBytes);
 
-  memcpy(slice, image + start, numBytes);
-  memcpy(sliceTemp, tmp_image + start, numBytes);
+  // memcpy(slice, image + start, numBytes);
+  // memcpy(sliceTemp, tmp_image + start, numBytes);
 
 
 
@@ -97,7 +97,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   if(rank == 0 ){
 
 
-    MPI_Scatter(image, size, MPI_FlOAT, buffer, size,0,MPI_COMM_WORLD);
+    MPI_Scatter(image, size, MPI_FLOAT, buffer, size,MPI_FLOAT, 0,MPI_COMM_WORLD);
 
 
         
@@ -107,7 +107,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
     printf("First float in each section is %f in core %d\n", buffer[0], rank );
 
-    
+
     // int start = 0 ;
     // int end = nx-1;
     // int numElements = end-start + 1;
