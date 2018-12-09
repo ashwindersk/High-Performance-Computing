@@ -84,7 +84,8 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
   int size = ny*nx/16;
   float* buffer=NULL;
-  int *sixteen[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+  int *sixteen = malloc(16*sizeof(int));
+  sixteen = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
   int * tester =NULL;
 
   int root =0 ;
