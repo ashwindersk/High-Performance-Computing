@@ -135,8 +135,9 @@ else if(rank >0 && rank < 15){
 
   //Sending and receving data from each rank above and below in the image
   MPI_Status * status;
+  printf("deadlock 1.1");
   MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank-1, 0,firstRowRecv,nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
-  printf("deadlock 1");
+  printf("deadlock 1.2");
   MPI_Sendrecv(lastRowSend,  nx, MPI_FLOAT, rank+1, 0,lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   printf("deadlock 2");
 
@@ -153,6 +154,7 @@ else{
   float * firstRowRecv = malloc(nx*sizeof(float));  
   
   MPI_Status * status;
+  printf("deadlock 4.1");
   MPI_Sendrecv(firstRowSend,  nx, MPI_FLOAT, rank-1, 0,firstRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
   printf("deadlock 4");
   
