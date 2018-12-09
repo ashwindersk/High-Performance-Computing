@@ -89,7 +89,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     MPI_Scatter(image, size, MPI_FLOAT, buffer, size,MPI_FLOAT, 0,MPI_COMM_WORLD);    
   }
   // else if( rank >0 && rank < 15){
-  else if( rank < 15){
+  else if( rank < 16){
 
     printf("Current Rank is %d", rank);
     for( int i =0 ; i< size ; i++){
