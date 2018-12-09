@@ -10,7 +10,7 @@
 
 
 
-void stencil(const int nx, const int ny, float * image, float * tmp_image);
+void stencil(const int nx, const int ny, float * image, float * tmp_image, int rank);
 void init_image(const int nx, const int ny, float * image, float * tmp_image);
 void output_image(const char * file_name, const int nx, const int ny, float *image);
 double wtime(void);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
   
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT, 0, MPI_COMM_WORLD );
   
-  printf("Current rank is %d and first value of buffer is %f", rank,bufferImg[0] );
+  //printf("Current rank is %d and first value of buffer is %f", rank,bufferImg[0] );
 
 
 
@@ -85,9 +85,15 @@ int main(int argc, char *argv[]) {
   free(image);
 }
 
-void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image) {
+void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image,int rank) {
   
+int sectionSize= 16*nx * 16 *ny /16;
 
+if(rank ==0){
+  for( int i = 0; i< sectionSize; i++){
+    printf("buffer value %f \n", buffer[i]);
+  }
+}
 
 
 //   //manually amending the values of the corners
