@@ -112,7 +112,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, sendcnt, MPI_INT, 0, MPI_COMM_WORLD); 
   
   for( int i = 0 ; i< sectionSize ;i++){
-    printf("%d", recvbuf[i]);
+    printf("%d\n", recvbuf[i]);
   }
 
 
