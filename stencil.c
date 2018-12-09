@@ -48,23 +48,23 @@ int main(int argc, char *argv[]) {
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 
-  int start = ((rank/16)*ny * ny);
-  int end = ny* (((rank+1)/16 )*ny -1) + nx-1;
+  // int start = ((rank/16)*ny * ny);
+  // int end = ny* (((rank+1)/16 )*ny -1) + nx-1;
 
-  int numElements = (end - start + 1);
-  int numBytes = sizeof(float) * numElements;
+  // int numElements = (end - start + 1);
+  // int numBytes = sizeof(float) * numElements;
 
-  float *slice = malloc(numBytes);
-  float *sliceTemp = malloc(numBytes);
+  // float *slice = malloc(numBytes);
+  // float *sliceTemp = malloc(numBytes);
 
   // memcpy(slice, image + start, numBytes);
   // memcpy(sliceTemp, tmp_image + start, numBytes);
 
 
-  printf("Current rank %d", rank);
+  printf("current ranking is %d", rank);
   // Call the stencil kernel
   double tic = wtime();
-  for (int t = 0; t < niters; ++t) {
+  for (int t = 0; t < niters; ++t) {}
     stencil(nx, ny, image, tmp_image, rank);
     stencil(nx, ny, tmp_image, image, rank);
   }
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
-
+  printf("rank that gets into stencil %d", rank);
   int size = ny*nx/16;
   float* buffer=NULL;
  
