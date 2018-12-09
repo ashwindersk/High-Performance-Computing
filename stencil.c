@@ -89,7 +89,7 @@ float* extractElements(float * subArray, float * array, int start, int end)
 {
     for (int i = start; i < end ; i++)
     {
-        subArray[i-start] = srcArray[i];
+        subArray[i-start] = array[i];
     }
     return subArray;
 }
