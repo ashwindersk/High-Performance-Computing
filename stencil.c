@@ -108,18 +108,18 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   int recvcnt = 1; 
   int * dataSize;
   MPI_Type_size(my_own_datatype, dataSize);
-  printf("data type size %d", dataSize);
-  MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, 4, my_own_datatype, 0, MPI_COMM_WORLD);
+  printf("data type size %d\n", dataSize);
+  MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, sendcnt, MPI_INT, 0, MPI_COMM_WORLD);
 
-  // Print the message received at each rank
-  // char msg[100];
-  // sprintf(msg,"Rank %d: ", rank);
-  // for(i=0; i<sectionSize; i++){
-  //   sprintf(msg + strlen(msg),"%d ", recvbuf[i]);
-  // }
-  // sprintf(msg + strlen(msg),"\n");
-  // printf("%s",msg);
-  // fflush(stdout);
+  Print the message received at each rank
+  char msg[200];
+  sprintf(msg,"Rank %d: ", rank);
+  for(i=0; i<sectionSize; i++){
+    sprintf(msg + strlen(msg),"%d ", recvbuf[i]);
+  }
+  sprintf(msg + strlen(msg),"\n");
+  printf("%s",msg);
+  fflush(stdout);
  
   
 
