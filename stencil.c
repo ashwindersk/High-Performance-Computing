@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
 
   int size = ny*nx/16;
-  float* buffer
+  float* buffer;
 
   if(rank == 0 ){
     buffer= malloc(size * sizeof(float));
