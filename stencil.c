@@ -86,18 +86,13 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   float* buffer = malloc(size * sizeof(float));
 
   if(rank == 0 ){
-
-
-    MPI_Scatter(image, size, MPI_FLOAT, buffer, size,MPI_FLOAT, 0,MPI_COMM_WORLD);
-
-
-        
+    MPI_Scatter(image, size, MPI_FLOAT, buffer, size,MPI_FLOAT, 0,MPI_COMM_WORLD);    
   }
   // else if( rank >0 && rank < 15){
-  else if( rank==2){
+  else if( rank>0 && rank < 15){
 
     printf("Current Rank is %d", rank);
-    for( int i =0 ; i< len(buffer) ; i++){
+    for( int i =0 ; i< size ; i++){
       printf("value is %f", buffer[i]);
     }
 
