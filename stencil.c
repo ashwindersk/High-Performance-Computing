@@ -82,56 +82,41 @@ int main(int argc, char *argv[]) {
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
   
-  int size = ny*nx/16;
-  float* buffer=NULL;
+ int i, rank, size;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
  
-  int * tester =NULL;
-  int *sixteen =(int *) malloc(16*sizeof(int));
-  int root =0 ;
-  if(rank == 0 ){
-     
-    for (int i =0 ; i< 16 ; i++){
-      sixteen[i] = i;
-    }
-    int *tester;
-    
-    buffer= malloc(size * sizeof(float));
+  int* sendbuf;
+  // Only root initializes the sendbuf. Root is scattering an array of length=num_procs * 4
+  // to each rank in MPI_COMM_WORLD. Hence, each rank will receive 4 integers after MPI_Scatter call.
+  if(rank ==0) {
+    sendbuf = (int*) malloc(sizeof(int) * size * 4);
+    for(i=0; i<size * 4; i++) sendbuf[i] = i;
   }
-
-  //MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
-   MPI_Scatter(sixteen, 1 , MPI_INT , tester, 1 ,MPI_INT , root, MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
-  // printf("%d", *tester);
-  // else if( rank >0 && rank < 15){  
-
-  printf("tester value : %d", *tester);
+  // Note that although the recvbuf at each rank is of size = 4, the recvcnt in MPI_Scatter 
+  // is 1 instead of 4. This is possible by creating a user defined datatype "my_own_datatype"
+  // that is effectively an structure containing 4 integers (contiguous).
+  int recvbuf[4];
+  MPI_Datatype my_own_datatype; // Declaring the user defined datatype
+  MPI_Type_contiguous(4, MPI_INT, &my_own_datatype); // specifying to runtime that this datatype is contiguous
+  MPI_Type_commit(&my_own_datatype); // A datatype can only be communicated once its committed (saved).
   
-  
-  
+  // Although the sendcnt and recvcnt is different, its important to note that total bytes
+  // sent by the root is equal to the sum of total bytes recevied at all processes in MPI_COMM_WORLD.
+  int sendcnt = 4;
+  int recvcnt = 1; 
+  MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, recvcnt, my_own_datatype, 0, MPI_COMM_WORLD);
 
-  
-    // int start = 0 ;
-    // int end = nx-1;
-    // int numElements = end-start + 1;
-    // int numBytes = sizeof(float) * numElements;
-
-    // float *firstRow = malloc(numBytes);
-    // memcpy(firstRow, image + start, numBytes);
-
-
-    // start = (ny-1) * ny ;
-    // end = (ny-1) * ny + nx-1;
-    // numElements = end-start + 1;
-    // numBytes = sizeof(float) * numElements;
-
-    // float *lastRow = malloc(numBytes);
-    // memcpy(lastRow, image + start, numBytes);
-
-    // MPI_Send(firstRow, len(firstRow), MPI_FLOAT, rank-1, MPI_COMM_WORLD );
-
-    // MPI_Send(lastRow, len(lastRow), MPI_FLOAT, rank+1, MPI_COMM_WORLD );
-
-    // MPI_Recv()
-
+  // Print the message received at each rank
+  char msg[100];
+  sprintf(msg,"Rank %d: ", rank);
+  for(i=0; i<4; i++){
+    sprintf(msg + strlen(msg),"%d ", recvbuf[i]);
+  }
+  sprintf(msg + strlen(msg),"\n");
+  printf("%s",msg);
+  fflush(stdout);
+ 
   
 
 
@@ -177,7 +162,6 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   for(int j = 1; j<nx-1; ++j){
    tmp_image[j + ny*(nx-1)] = 0.6f*image[j+ ny*(nx-1)] + 0.1f*image[(j-1)+ ny*(nx-1)] + 0.1f*image[(j+1)+ ny*(nx-1)] + 0.1f*image[j+ ny*(nx-2)];
   }
-
   MPI_Finalize();
  }
 
