@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
   // memcpy(sliceTemp, tmp_image + start, numBytes);
 
 
-
+  printf("Current rank %d", rank);
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
