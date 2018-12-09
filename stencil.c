@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
   // memcpy(sliceTemp, tmp_image + start, numBytes);
 
 
-  printf("current ranking is %d", rank);
+  printf("current ranking is %d\n", rank);
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {}
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
-  printf("rank that gets into stencil %d", rank);
+  printf("rank that gets into stencil %d\n", rank);ZZ
   int size = ny*nx/16;
   float* buffer=NULL;
  
