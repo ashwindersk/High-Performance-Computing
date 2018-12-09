@@ -83,13 +83,13 @@ int main(int argc, char *argv[]) {
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
 
   int size = ny*nx/16;
-  float* buffer;
+  float* buffer=NULL;
 
   if(rank == 0 ){
     buffer= malloc(size * sizeof(float));
   }
 
-   MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
+  MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
   
   // else if( rank >0 && rank < 15){  
   
