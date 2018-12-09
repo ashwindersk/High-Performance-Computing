@@ -87,10 +87,13 @@ int main(int argc, char *argv[]) {
 
 float* extractElements(float * subArray, float * array, int start, int end)
 {
+    int count = 0;
     for (int i = start; i < end ; i++)
     {
         subArray[i-start] = array[i];
+        count++;
     }
+    printf("number of elements in subarray is: %d", count);
     return subArray;
 }
 void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image,int rank) {
