@@ -106,6 +106,9 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   // sent by the root is equal to the sum of total bytes recevied at all processes in MPI_COMM_WORLD.
   int sendcnt = sectionSize;
   int recvcnt = 1; 
+  int * dataSize;
+  MPI_Type_size(my_own_datatype, dataSize);
+  printf("data type size %d", dataSize);
   MPI_Scatter(sendbuf, sendcnt, MPI_INT, recvbuf, 4, my_own_datatype, 0, MPI_COMM_WORLD);
 
   // Print the message received at each rank
