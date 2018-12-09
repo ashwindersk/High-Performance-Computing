@@ -93,7 +93,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     for (int i =0 ; i< 16 ; i++){
       sixteen[i] = i;
     }
-    tester =  malloc(sizeof(int));
+    int tester[16];
     
     buffer= malloc(size * sizeof(float));
   }
