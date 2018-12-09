@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
   free(image);
 }
 
-void extractElements(float * subArray, float * array, int start, int end)
+float* extractElements(float * subArray, float * array, int start, int end)
 {
     for (int i = start; i < end ; i++)
     {
@@ -102,10 +102,10 @@ if(rank ==0){
   int start = (ny-1) * nx;
   int end   = (ny-1) * nx + nx-1;
   
-  int * slice = malloc(nx*sizeof(float));
+  float * slice = malloc(nx*sizeof(float));
   slice= extractElements(slice, image, start, end);
 
-  
+
 
 }
 
