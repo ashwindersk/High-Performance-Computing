@@ -91,15 +91,10 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
    MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
   
-  // else if( rank >0 && rank < 15){
+  // else if( rank >0 && rank < 15){  
   
+  printf("Current rank %d , buffer value %f", rank, buffer[0]);
   
-  
-
-    
-    for( int i =0 ; i< size ; i++){
-      printf("Current rank %d ,buffer is %f", rank, buffer[i]);
-    }
 
   
     // int start = 0 ;
