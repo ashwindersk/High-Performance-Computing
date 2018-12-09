@@ -104,7 +104,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   // else if( rank >0 && rank < 15){  
 
   printf("tester value : %d", *tester);
-  MPI_Finalize();
+  
   
   
 
@@ -178,6 +178,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
    tmp_image[j + ny*(nx-1)] = 0.6f*image[j+ ny*(nx-1)] + 0.1f*image[(j-1)+ ny*(nx-1)] + 0.1f*image[(j+1)+ ny*(nx-1)] + 0.1f*image[j+ ny*(nx-2)];
   }
 
+  MPI_Finalize();
  }
 
 // Create the input image
