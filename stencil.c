@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
-  printf("rank that gets into stencil %d\n", rank);
+  //printf("rank that gets into stencil %d\n", rank);
   int size = ny*nx/16;
   float* buffer=NULL;
  
@@ -103,8 +103,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   
   // else if( rank >0 && rank < 15){  
   
-  //printf("Current rank %d, tester buffer %d\n",rank, *tester);
-  // printf("Current rank %d , buffer value %f", rank, buffer[0]);
+  printf("buffer value %d ", *tester);
   
 
   
