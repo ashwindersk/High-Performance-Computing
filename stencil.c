@@ -86,7 +86,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   float* buffer
 
   if(rank == 0 ){
-    buffer=  = malloc(size * sizeof(float));
+    buffer= malloc(size * sizeof(float));
   }
 
    MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
