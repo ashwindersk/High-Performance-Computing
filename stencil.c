@@ -42,11 +42,12 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
-
+  float *image;
+  float *tmp_image;
   if(rank ==0){
-    float *image =_mm_malloc(sizeof(float)*ny*nx,64);
+     image=_mm_malloc(sizeof(float)*ny*nx,64);
 
-    float *tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
+    tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
 
     // Set the input image
     init_image(nx, ny, image, tmp_image);
@@ -54,8 +55,8 @@ int main(int argc, char *argv[]) {
   int sectionSize = ny*nx/16;
 
 
-  int *bufferImg = malloc((ny*nx/16) *sizeof(float) );
-  int *bufferTempImg = malloc((ny*nx/16) *sizeof(float) );
+  float *bufferImg = malloc((ny*nx/16) *sizeof(float) );
+  float *bufferTempImg = malloc((ny*nx/16) *sizeof(float) );
 
   
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT, 0, MPI_COMM_WORLD );
