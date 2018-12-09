@@ -64,10 +64,10 @@ int main(int argc, char *argv[]) {
   
   // Call the stencil kernel
   double tic = wtime();
-  for (int t = 0; t < niters; ++t) {
+  //for (int t = 0; t < niters; ++t) {
     stencil(nx, ny, image, tmp_image, rank);
     //stencil(nx, ny, tmp_image, image, rank);
-  }
+  //}
   double toc = wtime();
 
 
