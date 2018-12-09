@@ -104,7 +104,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   }
   else if( rank >0 && rank < 15){
 
-
+    printf("Current Rank is %d", rank);
     printf("First float in each section is %f in core %d\n", buffer[0], rank );
 
 
