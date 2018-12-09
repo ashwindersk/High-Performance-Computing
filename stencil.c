@@ -134,7 +134,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     // MPI_Send(firstRowSend, nx, MPI_FLOAT, rank -1, 0, MPI_COMM_WORLD);
 
 
-    MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank - 1, 0, firstRowRecv, nx, MPI_FLOAT, rank, 0, MPI_COMM_WORLD, status);
+    MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank - 1, 0,firstRowRecv, nx, MPI_FLOAT, rank, 0, MPI_COMM_WORLD, status);
     //MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, 0, 0, firstRowRecv, nx, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, status);
 
     printf("deadlock 1.2 and rank %d\n", rank);
