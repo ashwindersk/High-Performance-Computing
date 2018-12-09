@@ -85,14 +85,28 @@ int main(int argc, char *argv[]) {
   free(image);
 }
 
+void extractElements(float * subArray, float * array, int start, int end)
+{
+    for (int i = start; i < end ; i++)
+    {
+        subArray[i-start] = srcArray[i];
+    }
+    return subArray;
+}
 void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image,int rank) {
   
 int sectionSize= 16*nx * 16 *ny /16;
 
 if(rank ==0){
-  for( int i = 0; i< sectionSize; i++){
-    printf("buffer value %f \n", image[i]);
-  }
+  //sending the last row of the array to rank 1;
+  int start = (ny-1) * nx;
+  int end   = (ny-1) * nx + nx-1;
+  
+  int * slice = malloc(nx*sizeof(float));
+  slice= extractElements(slice, image, start, end);
+
+  
+
 }
 
 
