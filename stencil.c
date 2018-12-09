@@ -120,6 +120,9 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     int lastRowStart = (ny - 1) * nx;
     int lastRowEnd = (ny - 1) * nx + nx - 1;
     firstRowSend = extractElements(firstRowSend, image, firstRowStart, firstRowEnd);
+    for(int i = 0 ; i< nx ; i++){
+      printf("extracted row value : %f \n ", firstRowSend[i]);
+    }
     lastRowSend = extractElements(lastRowSend, image, lastRowStart, lastRowEnd);
 
     //Sending and receving data from each rank above and below in the image
