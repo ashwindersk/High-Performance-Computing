@@ -1,46 +1,7 @@
 /panfs/panasas01/cosc/ak16625/.bash_profile: line 16: T: command not found
 /panfs/panasas01/cosc/ak16625/.bash_profile: line 18: alias: mpirun -np 4 ./stencil: not found
 
-stencil:37000 terminated with signal 11 at PC=414363 SP=7fffffffbd88.  Backtrace:
-
-stencil:36996 terminated with signal 11 at PC=414363 SP=7fffffffbd88.  Backtrace:
-stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414363]
-stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414363]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
-stencil(stencil+0xe8)[0x402948]
-stencil(main+0x44f)[0x4022af]
-/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
-stencil[0x401ce9]
-
-stencil:36994 terminated with signal 11 at PC=414363 SP=7fffffffbd88.  Backtrace:
-stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414363]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
-stencil(stencil+0xe8)[0x402948]
-stencil(main+0x44f)[0x4022af]
-/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
-stencil[0x401ce9]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
-/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
-stencil(stencil+0xe8)[0x402948]
-stencil(main+0x44f)[0x4022af]
-/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
-stencil[0x401ce9]
-
-stencil:36993 terminated with signal 11 at PC=2aaab2d56564 SP=7fffffffbd90.  Backtrace:
+stencil:47979 terminated with signal 11 at PC=2aaab2d56564 SP=7fffffffbd90.  Backtrace:
 /usr/lib64/libpsm_infinipath.so.1(psmi_am_mq_handler+0x2c4)[0x2aaab2d56564]
 /usr/lib64/libpsm_infinipath.so.1(+0xa832)[0x2aaab2d4d832]
 /usr/lib64/libpsm_infinipath.so.1(+0xd90f)[0x2aaab2d5090f]
@@ -53,12 +14,51 @@ stencil:36993 terminated with signal 11 at PC=2aaab2d56564 SP=7fffffffbd90.  Bac
 /cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
 /cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
 /cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
-stencil(stencil+0xe8)[0x402948]
-stencil(main+0x44f)[0x4022af]
+stencil(stencil+0xf8)[0x402908]
+stencil(main+0x3fd)[0x40225d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401ce9]
+
+stencil:47980 terminated with signal 11 at PC=414323 SP=7fffffffbd88.  Backtrace:
+stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414323]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
+stencil(stencil+0xf8)[0x402908]
+stencil(main+0x3fd)[0x40225d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401ce9]
+
+stencil:47982 terminated with signal 11 at PC=414323 SP=7fffffffbd88.  Backtrace:
+stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414323]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
+stencil(stencil+0xf8)[0x402908]
+stencil(main+0x3fd)[0x40225d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401ce9]
+
+stencil:47986 terminated with signal 11 at PC=414323 SP=7fffffffbd88.  Backtrace:
+stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414323]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
+stencil(stencil+0xf8)[0x402908]
+stencil(main+0x3fd)[0x40225d]
 /lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
 stencil[0x401ce9]
 --------------------------------------------------------------------------
-mpirun has exited due to process rank 2 with PID 36994 on
+mpirun has exited due to process rank 4 with PID 47982 on
 node node31-031 exiting improperly. There are two reasons this could occur:
 
 1. this process did not call "init" before exiting, but others in
