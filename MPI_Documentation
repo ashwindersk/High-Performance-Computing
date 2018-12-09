@@ -105,27 +105,27 @@ MPI_send(message /* the address to the buffered message (choice of any data type
 
 #MPI_Send();
 	
-	#blocking too, but potentially asynchronous
+	# blocking too, but potentially asynchronous
 
-	#Why potentially asynchronous? Some MPI implementations use system buffers, but some dont. 
+	# Why potentially asynchronous? Some MPI implementations use system buffers, but some dont. 
 
-	#System-buffer means that the call will return when the message is copied from the user-space to the system buffer, which technically means that the variable in the original buffer can be re-used in the code because the Send() will use the variable in the system buffer, which means that it is safe to continue on in the program - breaks the asynchronous aspect of the function call
-
-
-	#Without the system buffer, Send() will behave like SSend();
+	# System-buffer means that the call will return when the message is copied from the user-space to the system buffer, which technically means that the variable in the original buffer can be re-used in the code because the Send() will use the variable in the system buffer, which means that it is safe to continue on in the program - breaks the asynchronous aspect of the function call
 
 
-	#Pros
+	# Without the system buffer, Send() will behave like SSend();
+
+
+	# Pros
 
 		#Asynchronous
 
 
 
-	#Cons 
+	# Cons 
 
-		#Alot of overhead because you could be constantly copying a large amount of memory into system buffers all the time, which adds up. 
+		# Alot of overhead because you could be constantly copying a large amount of memory into system buffers all the time, which adds up. 
 
-		#May become sloppy in terms of your program design. If p1 and p2 are both using Send() and expecting to use System buffer to then receive on the next line, what if you run this program on a cluster that does not have the correct MPI implmentation, then both the Send()'s act like a synchronouse one and they both deadlock because they expect a receive. 
+		# May become sloppy in terms of your program design. If p1 and p2 are both using Send() and expecting to use System buffer to then receive on the next line, what if you run this program on a cluster that does not have the correct MPI implmentation, then both the Send()'s act like a synchronouse one and they both deadlock because they expect a receive. 
 
 		#For Blue Crystal design your communication patterns well, and the issue wont be a problem
 

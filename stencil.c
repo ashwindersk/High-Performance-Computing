@@ -10,7 +10,7 @@
 
 
 
-void stencil(const int nx, const int ny, float * image, float * tmp_image);
+void stencil(const int nx, const int ny, float * image, float * tmp_image, int rank);
 void init_image(const int nx, const int ny, float * image, float * tmp_image);
 void output_image(const char * file_name, const int nx, const int ny, float *image);
 double wtime(void);
@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
   init_image(nx, ny, image, tmp_image);
 
 
+
   //Figuring out which processors are involved in the computation 
   MPI_Init(&argc, &argv);
 
@@ -46,6 +47,22 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+
+  int start = ((rank/16)*ny * ny);
+  int end = ny* (((rank+1)/16 )*ny -1) + nx-1;
+
+  int numElements = (end - start + 1)
+  int numBytes = sizeof(float) * numElements;
+
+  float *slice = malloc(numBytes);
+  float *sliceTemp = malloc(numBytes);
+
+  memcpy(slice, image + start, numBytes);
+  memcpy(sliceTemp, tmp_image + start, numBytes);
+
+
+
+
 
   printf("Current core identifier: %d out of %d\n", rank, size );
 
@@ -57,8 +74,8 @@ int main(int argc, char *argv[]) {
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
-    stencil(nx, ny, image, tmp_image);
-    stencil(nx, ny, tmp_image, image);
+    stencil(nx, ny, image, tmp_image, rank);
+    stencil(nx, ny, tmp_image, image, rank);
   }
   double toc = wtime();
 
@@ -72,7 +89,52 @@ int main(int argc, char *argv[]) {
   free(image);
 }
 
-void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
+void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
+
+  int size = ny*nx/16;
+  float* buffer = malloc(size * sizeof(float));
+
+  if(rank == 0 ){
+
+
+    MPI_Scatter(image, size, MPI_FlOAT, buffer, size,0,MPI_COMM_WORLD);
+
+
+        
+  }
+  else if( rank >0 && rank < 15){
+
+
+    printf("First float in each section is %f in core %d\n", buffer[0], rank );
+
+    
+    // int start = 0 ;
+    // int end = nx-1;
+    // int numElements = end-start + 1;
+    // int numBytes = sizeof(float) * numElements;
+
+    // float *firstRow = malloc(numBytes);
+    // memcpy(firstRow, image + start, numBytes);
+
+
+    // start = (ny-1) * ny ;
+    // end = (ny-1) * ny + nx-1;
+    // numElements = end-start + 1;
+    // numBytes = sizeof(float) * numElements;
+
+    // float *lastRow = malloc(numBytes);
+    // memcpy(lastRow, image + start, numBytes);
+
+    // MPI_Send(firstRow, len(firstRow), MPI_FLOAT, rank-1, MPI_COMM_WORLD );
+
+    // MPI_Send(lastRow, len(lastRow), MPI_FLOAT, rank+1, MPI_COMM_WORLD );
+
+    // MPI_Recv()
+
+  }
+
+
+
 
 
   //manually amending the values of the corners
