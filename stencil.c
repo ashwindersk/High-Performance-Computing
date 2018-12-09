@@ -62,15 +62,6 @@ int main(int argc, char *argv[]) {
 
 
 
-
-
-  printf("Current core identifier: %d out of %d\n", rank, size );
-
-
-  
-
-
-
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
@@ -102,10 +93,13 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
         
   }
-  else if( rank >0 && rank < 15){
+  // else if( rank >0 && rank < 15){
+  else if( rank==2){
 
     printf("Current Rank is %d", rank);
-    printf("First float in each section is %f in core %d\n", buffer[0], rank );
+    for( int i =0 ; i< len(buffer) ; i++){
+      printf("value is %f", buffer[i]);
+    }
 
 
     // int start = 0 ;
