@@ -1,0 +1,18 @@
+
+stencil:31005 terminated with signal 11 at PC=2aaab2d56564 SP=7fffffffbd90.  Backtrace:
+/usr/lib64/libpsm_infinipath.so.1(psmi_am_mq_handler+0x2c4)[0x2aaab2d56564]
+/usr/lib64/libpsm_infinipath.so.1(+0xa832)[0x2aaab2d4d832]
+/usr/lib64/libpsm_infinipath.so.1(+0xd90f)[0x2aaab2d5090f]
+/usr/lib64/libpsm_infinipath.so.1(psmi_poll_internal+0x29)[0x2aaab2d73309]
+/usr/lib64/libpsm_infinipath.so.1(psm_mq_ipeek+0xa5)[0x2aaab2d71e05]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_mtl_psm.so(ompi_mtl_psm_progress+0x26)[0x2aaab2b28e46]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_progress+0xa9)[0x2aaaaae01ac9]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_pml_cm.so(mca_pml_cm_recv+0x3fb)[0x2aaab0dbdafb]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x2e9)[0x2aaab3dd9b59]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
+stencil(stencil+0xe8)[0x402948]
+stencil(main+0x44f)[0x4022af]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401ce9]

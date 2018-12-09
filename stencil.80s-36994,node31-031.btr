@@ -1,0 +1,13 @@
+
+stencil:36994 terminated with signal 11 at PC=414363 SP=7fffffffbd88.  Backtrace:
+stencil(__intel_ssse3_rep_memcpy+0x2243)[0x414363]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(opal_datatype_copy_content_same_ddt+0x5af)[0x2aaaaadf989f]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(ompi_datatype_sndrcv+0x594)[0x2aaaaad3e024]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_binomial+0x3cd)[0x2aaab3dd9c3d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_tuned.so(ompi_coll_tuned_scatter_intra_dec_fixed+0x5d)[0x2aaab3dcb74d]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_coll_sync.so(mca_coll_sync_scatter+0x93)[0x2aaab3bc2fa3]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Scatter+0xa1)[0x2aaaaad50121]
+stencil(stencil+0xe8)[0x402948]
+stencil(main+0x44f)[0x4022af]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401ce9]
