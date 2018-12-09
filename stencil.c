@@ -103,7 +103,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   // printf("%d", *tester);
   // else if( rank >0 && rank < 15){  
 
-  printf("tester value : %d", tester)
+  printf("tester value : %d", tester);
   MPI_Finalize();
   
   
