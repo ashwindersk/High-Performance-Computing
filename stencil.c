@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
-  //printf("rank that gets into stencil %d\n", rank);
+  printf("rank that gets into stencil %d\n", rank);
   int size = ny*nx/16;
   float* buffer=NULL;
  
@@ -99,8 +99,8 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
   }
 
  // MPI_Scatter(image, size , MPI_FLOAT , buffer, size , MPI_FLOAT , 0 , MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
-  MPI_Scatter(sixteen, 1 , MPI_INT , tester, 1 ,MPI_INT , root, MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
-  printf("%d", *tester);
+  // MPI_Scatter(sixteen, 1 , MPI_INT , tester, 1 ,MPI_INT , root, MPI_COMM_WORLD); // image, blocksize, data type, dest buffer, offset, data type, root, comm    
+  // printf("%d", *tester);
   // else if( rank >0 && rank < 15){  
   
   
