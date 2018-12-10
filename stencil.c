@@ -162,7 +162,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   
     MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank - 1, 0, firstRowRecv, nx, MPI_FLOAT, rank - 1, 0, MPI_COMM_WORLD, status);
    
-
+    free(firstRowSend);
+    free(firstRowRecv);
     
   }
   
