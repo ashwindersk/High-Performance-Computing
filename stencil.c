@@ -59,11 +59,11 @@ int main(int argc, char *argv[])
   
   // Call the stencil kernel
   double tic = wtime();
-  for (int t = 0; t < niters; ++t)
-  {
+  //for (int t = 0; t < niters; ++t)
+  //{
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
-    stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
-  }
+    //stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
+  //}
  
   double toc = wtime();
   printf("rank %d is about to call Finalize\n", rank);
@@ -141,16 +141,16 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   else if(rank == 15)
   {
 
-    //sending the first row of the array to rank 14;
-    int start = 0;
-    int end = nx - 1;
+    // //sending the first row of the array to rank 14;
+    // int start = 0;
+    // int end = nx - 1;
 
-    float *firstRowSend = malloc(nx * sizeof(float));
-    firstRowSend = extractElements(firstRowSend, image, start, end);
+    // float *firstRowSend = malloc(nx * sizeof(float));
+    // firstRowSend = extractElements(firstRowSend, image, start, end);
 
-    float *firstRowRecv = malloc(nx * sizeof(float));
+    // float *firstRowRecv = malloc(nx * sizeof(float));
 
-    MPI_Status *status;
+    // MPI_Status *status;
   
     //MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, rank + 1, 0, firstRowRecv, nx, MPI_FLOAT, rank + 1, 0, MPI_COMM_WORLD, status);
     //MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, 1, 0, firstRowRecv, nx, MPI_FLOAT, 15, 0, MPI_COMM_WORLD, status);
