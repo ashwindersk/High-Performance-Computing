@@ -140,7 +140,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     printf("deadlock \n");
     //MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, rank + 14, 15 , lastRowRecv , nx, MPI_FLOAT, rank+14, 15, MPI_COMM_WORLD, status);
     MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 15, 0 , lastRowRecv , nx, MPI_FLOAT, 15, 0, MPI_COMM_WORLD, status);
-    printf("finish 1\n")
+    printf("finish 1\n");
   
     
     
@@ -165,7 +165,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Status *status;
     printf("gets here \n");
     MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
-    printf("finish 2\n")
+    printf("finish 2\n");
    
    
     free(firstRowSend);
