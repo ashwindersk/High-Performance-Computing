@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
-
+  
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t)
@@ -70,12 +70,12 @@ int main(int argc, char *argv[])
 
   MPI_Finalize();
   // Output
-  printf("------------------------------------\n");
-  printf(" runtime: %lf s\n", toc - tic);
-  printf("------------------------------------\n");
+  // printf("------------------------------------\n");
+  // printf(" runtime: %lf s\n", toc - tic);
+  // printf("------------------------------------\n");
 
-  output_image(OUTPUT_FILE, nx, ny, image);
-  free(image);
+  // output_image(OUTPUT_FILE, nx, ny, image);
+  // free(image);
   
 }
 
@@ -107,12 +107,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Status *status;
 
     MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
-    int count =0;
-    for(int i = 0 ; i< nx ; i++){
-      printf("value: %f", lastRowRecv[i]);
-      count ++;
-    }
-    printf("count %d\n", count);   
+    
+     
   }
   // else if (rank > 0 && rank < 15)
   else if (rank == 1)
