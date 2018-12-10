@@ -62,16 +62,12 @@ int main(int argc, char *argv[])
   double tic = wtime();
   for (int t = 0; t <  niters; ++t)
   {
-
-    if(rank == 0 || rank ==1){
-      printf("iteration : %d on rank %d\n",t, rank);
-    }
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     //stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
  
   double toc = wtime();
-  printf("rank %d is about to call Finalize\n", rank);
+  
 
   MPI_Finalize();
   // Output
@@ -101,7 +97,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
   if (rank == 0)
   {
-    printf("entering rank 0");
+    printf("entering rank 0\n");
     //sending the last row of the array to rank 1;
     int start = (ny - 1) * nx;
     int end = (ny - 1) * nx + nx - 1;
