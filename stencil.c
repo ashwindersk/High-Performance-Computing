@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
   }
  
   double toc = wtime();
+  printf("rank %d is about to call Finalize\n", rank);
+
   MPI_Finalize();
   // Output
   printf("------------------------------------\n");
@@ -157,9 +159,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     
   }
-  else{
-    printf("Hey from rank %d\n", rank);
-  }
+  
 
   //   //manually amending the values of the corners
   //  tmp_image[0]                   = 0.6f * image[0]                  + 0.1f*image[1 + ny*0]                  + 0.1f*image[0 + ny*1];
