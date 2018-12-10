@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
   double tic = wtime();
   for (int t = 0; t <  niters; ++t)
   {
+    printf("iteration : %d\n",t);
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     //stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
