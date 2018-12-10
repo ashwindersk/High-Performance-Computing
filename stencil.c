@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
- 
+  printf("finished stencil");
   double toc = wtime();
   
 
