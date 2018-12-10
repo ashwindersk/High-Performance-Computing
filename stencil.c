@@ -164,7 +164,15 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     float *firstRowRecv = (float *) malloc(nx * sizeof(float));
 
     MPI_Status *status;
+    int count  = 0;
     printf("gets here \n");
+    for(int i= 0 ; i<nx ; i++){
+      printf("%d", firstRowSend);
+      count++;
+    }
+
+    printf("count is %d", count);
+    
     MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
     printf("finish 2\n");
    
