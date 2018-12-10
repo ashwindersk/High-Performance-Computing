@@ -63,21 +63,21 @@ int main(int argc, char *argv[])
   for (int t = 0; t <  niters; ++t)
   { 
     
-    printf("iteration : %d and rank %d\n", t, rank);
+    //printf("iteration : %d and rank %d\n", t, rank);
     
 
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
-  printf("finished stencil\n");
+  //printf("finished stencil\n");
   double toc = wtime();
   
 
   MPI_Finalize();
-  // Output
-  // printf("------------------------------------\n");
-  // printf(" runtime: %lf s\n", toc - tic);
-  // printf("------------------------------------\n");
+  Output
+  printf("------------------------------------\n");
+  printf(" runtime: %lf s\n", toc - tic);
+  printf("------------------------------------\n");
 
   // output_image(OUTPUT_FILE, nx, ny, image);
   // free(image);
@@ -150,6 +150,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     int lastRowStart = (ny - 1) * nx;
     int lastRowEnd = (ny - 1) * nx + nx - 1;
+
     firstRowSend = extractElements(firstRowSend, image, firstRowStart, firstRowEnd);
     
     lastRowSend = extractElements(lastRowSend, image, lastRowStart, lastRowEnd);
@@ -160,7 +161,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   
 
     //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, 0 , firstRowRecv , nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
-    printf("deadlock \n");
+    //printf("deadlock \n");
      //MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 2, 0 , lastRowRecv , nx, MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
     MPI_Send(firstRowSend, nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
     MPI_Recv(firstRowRecv, nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
@@ -169,7 +170,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     //int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status *status)
     //MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
-    printf("finish 1\n");
+    //printf("finish 1\n");
     
     free(firstRowRecv);
     free(firstRowSend);
