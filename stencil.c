@@ -113,7 +113,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     free(lastRowSend);
     free(lastRowRecv);
   }
-   else if (rank==1)
+   else if (rank>0 && rank < 15)
    //else if(rank > 0 && rank <15);
   {
     
@@ -139,8 +139,12 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, 0 , firstRowRecv , nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
     printf("deadlock \n");
-     MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 2, 0 , lastRowRecv , nx, MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
-    //MPI_Send(firstRowSend, nx,MPI_FLOAT,2, 0, MPI_COMM_WORLD );
+     //MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 2, 0 , lastRowRecv , nx, MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
+    MPI_Send(firstRowSend, nx,MPI_FLOAT,rank-1, 0, MPI_COMM_WORLD );
+    MPI_Recv(firstRowRecv, nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
+
+    MPI_Send(lastRowSend, nx,MPI_FLOAT,rank+1, 0, MPI_COMM_WORLD );
+    MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     //int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status *status)
     //MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
     printf("finish 1\n");
@@ -153,7 +157,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     free(lastRowSend);
 
   }
-  else if(rank == 2)
+  else if(rank == 15)
   {
 
     //sending the first row of the array to rank 14
@@ -167,8 +171,10 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     MPI_Status *status;
 
-    MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
-    //MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
+    //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
+    MPI_Recv(firstRowRecv, nx , MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
+    MPI_Send(firstRowSend, nx , MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
+
     
     free(firstRowSend);
     free(firstRowRecv);
