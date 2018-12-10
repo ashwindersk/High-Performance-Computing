@@ -113,8 +113,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     free(lastRowSend);
     free(lastRowRecv);
   }
-   //else if (rank==1)
-   else if(rank > 0 && rank <15);
+   else if (rank==1)
+   //else if(rank > 0 && rank <15);
   {
     
     float *firstRowRecv = (float *) malloc(nx * sizeof(float));
@@ -168,6 +168,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     free(firstRowRecv);
     
   }
+  else{}
   
 
   //   //manually amending the values of the corners
