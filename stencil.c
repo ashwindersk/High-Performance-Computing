@@ -101,6 +101,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
   if (rank == 0)
   {
+    printf("entering rank 0");
     //sending the last row of the array to rank 1;
     int start = (ny - 1) * nx;
     int end = (ny - 1) * nx + nx - 1;
@@ -113,12 +114,13 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     
-     
+    free(lastRowSend);
+    free(lastRowRecv);
   }
   // else if (rank > 0 && rank < 15)
   else if (rank == 1)
   {
-    
+    printf("entering rank 1\n");
     float *firstRowRecv = (float *) malloc(nx * sizeof(float));
     float *lastRowRecv = (float *)  malloc(nx * sizeof(float));
 
