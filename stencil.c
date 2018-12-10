@@ -139,7 +139,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, rank + 1, 0 , lastRowRecv , nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
 
     
-
+    printf("deadlock \n");
     free(firstRowRecv);
     free(firstRowSend);
     free(lastRowRecv);
