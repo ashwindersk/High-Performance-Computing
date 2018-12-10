@@ -107,15 +107,17 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Status *status;
 
     MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+    int count =0;
     for(int i = 0 ; i< nx ; i++){
       printf("value: %f", lastRowRecv[i]);
+      count ++
     }
-    
+    printf("count %d\n", count)   
   }
   // else if (rank > 0 && rank < 15)
   else if (rank == 1)
   {
-
+    
     float *firstRowRecv = (float *) malloc(nx * sizeof(float));
     float *lastRowRecv = (float *)  malloc(nx * sizeof(float));
 
