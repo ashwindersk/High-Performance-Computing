@@ -110,7 +110,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     // for(int i = 0 ; i< nx ; i++){
     //   printf("value: %f", lastRowRecv[i]);
     // }
-   
+    printf("deadlock 0");
   }
   // else if (rank > 0 && rank < 15)
   else if (rank == 1)
