@@ -59,11 +59,11 @@ int main(int argc, char *argv[])
   
   // Call the stencil kernel
   double tic = wtime();
-  //for (int t = 0; t < niters; ++t)
-  //{
+  for (int t = 0; t < niters; ++t)
+  {
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
-  //}
+  }
  
   double toc = wtime();
   printf("rank %d is about to call Finalize\n", rank);
