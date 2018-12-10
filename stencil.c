@@ -139,8 +139,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, 0 , firstRowRecv , nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
     printf("deadlock \n");
-    // MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 2, 0 , lastRowRecv , nx, MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
-    MPI_Send(firstRowSend, nx,MPI_FLOAT,2, 0, MPI_COMM_WORLD );
+     MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 2, 0 , lastRowRecv , nx, MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
+    //MPI_Send(firstRowSend, nx,MPI_FLOAT,2, 0, MPI_COMM_WORLD );
     //int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status *status)
     //MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
     printf("finish 1\n");
@@ -167,8 +167,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     MPI_Status *status;
 
-    //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
-    MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
+    MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
+    //MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
     
     free(firstRowSend);
     free(firstRowRecv);
