@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  printf("rank %d called Init\n", rank);
+  //printf("rank %d called Init\n", rank);
   float *image;
   float *tmp_image;
   if (rank == 0)
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
   }
  
   double toc = wtime();
-  printf("rank %d is about to call Finalize\n", rank);
+  //printf("rank %d is about to call Finalize\n", rank);
 
   MPI_Finalize();
   // Output
