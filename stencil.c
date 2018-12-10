@@ -73,6 +73,7 @@ int main(int argc, char *argv[])
 
   output_image(OUTPUT_FILE, nx, ny, image);
   free(image);
+  MPI_Finalize();
 }
 
 float *extractElements(float *subArray, float *array, int start, int end)
@@ -195,7 +196,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   //   for(int j = 1; j<nx-1; ++j){
   //    tmp_image[j + ny*(nx-1)] = 0.6f*image[j+ ny*(nx-1)] + 0.1f*image[(j-1)+ ny*(nx-1)] + 0.1f*image[(j+1)+ ny*(nx-1)] + 0.1f*image[j+ ny*(nx-2)];
   //   }
-  MPI_Finalize();
+  
 }
 
 // Create the input image
