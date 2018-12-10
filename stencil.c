@@ -74,14 +74,14 @@ int main(int argc, char *argv[])
   
 
   MPI_Finalize();
-  Output
+  //Output
   printf("------------------------------------\n");
   printf(" runtime: %lf s\n", toc - tic);
   printf("------------------------------------\n");
 
   // output_image(OUTPUT_FILE, nx, ny, image);
   // free(image);
-  
+   
 }
 
 float *extractElements(float *subArray, float *array, int start, int end)
