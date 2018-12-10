@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   for (int t = 0; t <  niters; ++t)
   { 
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
-    //stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
+    stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
  
   double toc = wtime();
