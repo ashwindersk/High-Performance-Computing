@@ -167,7 +167,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     int count  = 0;
     printf("gets here \n");
     for(int i= 0 ; i<nx ; i++){
-      printf("%d", firstRowSend[i]);
+      printf("%f", firstRowSend[i]);
       count++;
     }
 
