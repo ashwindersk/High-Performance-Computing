@@ -62,9 +62,9 @@ int main(int argc, char *argv[])
   double tic = wtime();
   for (int t = 0; t <  niters; ++t)
   { 
-    if(t == 99){
-      printf("iteration : %d\n and rank %d", niters, rank);
-    }
+    
+    printf("iteration : %d\n and rank %d", niters, rank);
+    
 
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
