@@ -64,8 +64,6 @@ int main(int argc, char *argv[])
   { 
     
     //printf("iteration : %d and rank %d\n", t, rank);
-    
-
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
@@ -96,8 +94,6 @@ float *extractElements(float *subArray, float *array, int start, int end)
 }
 void stencil(const int nx, const int ny, float *restrict image, float *restrict tmp_image, int rank)
 {
-
-  int sectionSize = 16 * nx * 16 * ny / 16;
 
   if (rank == 0)
   {
