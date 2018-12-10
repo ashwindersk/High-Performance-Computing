@@ -145,8 +145,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   
     
     
-    // free(firstRowRecv);
-    // free(firstRowSend);
+    free(firstRowRecv);
+    free(firstRowSend);
     free(lastRowRecv);
     free(lastRowSend);
 
