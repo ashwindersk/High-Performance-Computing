@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   for (int t = 0; t <  niters; ++t)
   { 
     
-    printf("iteration : %d\n and rank %d", niters, rank);
+    printf("iteration : %d and rank %d\n", t, rank);
     
 
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
