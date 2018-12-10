@@ -112,8 +112,9 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     float *lastRowRecv = (float *) malloc(nx * sizeof(float));
     MPI_Status *status;
 
-    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
-    
+    //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
+    MPI_Send(lastRowSend, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD );
+    MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     // for(int i = 0 ; i < ny; i++){
     //  for( int j =0 ; j< nx ; j++){       
     //                                    tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
