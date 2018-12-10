@@ -139,7 +139,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, 0 , firstRowRecv , nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
     printf("deadlock \n");
     //MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, rank + 1, 0 , lastRowRecv , nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
-    //MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 15, 0 , lastRowRecv , nx, MPI_FLOAT, 15, 0, MPI_COMM_WORLD, status);
+    MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 15, 0 , lastRowRecv , nx, MPI_FLOAT, 15, 0, MPI_COMM_WORLD, status);
   
     
     
@@ -156,14 +156,14 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     int start = 0;
     int end = nx - 1;
 
-    float *firstRowSend = malloc(nx * sizeof(float));
+    float *firstRowSend = (float *) malloc(nx * sizeof(float));
     firstRowSend = extractElements(firstRowSend, image, start, end);
 
-    float *firstRowRecv = malloc(nx * sizeof(float));
+    float *firstRowRecv = (float *) malloc(nx * sizeof(float));
 
     MPI_Status *status;
   
-    //MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, 1, 0, firstRowRecv, nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
+    MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, 1, 0, firstRowRecv, nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
    
     free(firstRowSend);
     free(firstRowRecv);
