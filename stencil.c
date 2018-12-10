@@ -114,6 +114,16 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     
+    for(int i = 0 ; i < ny; i++){
+     for( int j =0 ; j< nx ; j++){       
+                                       tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
+     if(i<1 && j>0 && j<nx-1)          tmp_image[j+i*nx] +=  image[(j+1) + i*nx]*0.1 + 0.1*image[j + (i+1)*nx] +  0.1*image[(j-1) + i*nx];
+     else if(j<1)                      tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
+     else if(j>nx-2)                   tmp_image[j+i*nx] += 0.1*image[j-1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
+     else if(i>ny-2 && j>0 && j<nx-1 ) tmp_image[j+i*nx] += lastRowRecv[j] + 0.1*image[j + (i-1)*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j+1 + i*nx];
+     else {                            tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j + (i-1)*nx] + 0.1*0.1*image[j + (i+1)*nx]; } 
+     }
+    
     free(lastRowSend);
     free(lastRowRecv);
   }
@@ -128,12 +138,19 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     float *firstRowRecv = (float *) malloc(nx * sizeof(float));
 
     MPI_Status *status;
-
-    //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, 1, 0 , firstRowRecv , nx, MPI_FLOAT, 1, 0, MPI_COMM_WORLD, status);
     MPI_Recv(firstRowRecv, nx , MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
     MPI_Send(firstRowSend, nx , MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
 
-    
+    for(int i = 0 ; i < ny; i++){
+     for( int j =0 ; j< nx ; j++){       
+                                       tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
+     if(i<1 && j>0 && j<nx-1)          tmp_image[j+i*nx] += firstRowRecv[j] + image[(j+1) + i*nx]*0.1 + 0.1*image[j + (i+1)*nx] +  0.1*image[(j-1) + i*nx];
+     else if(j<1)                      tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
+     else if(j>nx-2)                   tmp_image[j+i*nx] += 0.1*image[j-1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
+     else if(i>ny-2 && j>0 && j<nx-1 ) tmp_image[j+i*nx] += 0.1*image[j + (i-1)*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j+1 + i*nx];
+     else {                            tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j + (i-1)*nx] + 0.1*0.1*image[j + (i+1)*nx]; } 
+     }
+
     free(firstRowSend);
     free(firstRowRecv);
   }
@@ -159,19 +176,23 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //Sending and receving data from each rank above and below in the image
     MPI_Status *status;
   
-
-    //MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, 0 , firstRowRecv , nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
-    //printf("deadlock \n");
-     //MPI_Sendrecv( lastRowSend , nx, MPI_FLOAT, 2, 0 , lastRowRecv , nx, MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
     MPI_Send(firstRowSend, nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
     MPI_Recv(firstRowRecv, nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
 
     MPI_Send(lastRowSend, nx, MPI_FLOAT,rank+1, 0, MPI_COMM_WORLD );
     MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
-    //int MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status *status)
-    //MPI_Recv(firstRowRecv, nx , MPI_FLOAT, 2, 0, MPI_COMM_WORLD, status);
-    //printf("finish 1\n");
     
+
+    for(int i = 0 ; i < ny; i++){
+      for( int j =0 ; j< nx ; j++){       
+                                        tmp_image[j+i*nx]= image[j+i*nx] * 0.6;
+      if(i<1 && j>0 && j<nx-1)          tmp_image[j+i*nx] += firstRowRecv[j] + image[(j+1) + i*nx] *0.1 + image[j + (i+1)*nx] +  image[(j-1) + i*nx];
+      else if(j<1)                      tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
+      else if(j>nx-2)                   tmp_image[j+i*nx] += 0.1*image[j-1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
+      else if(i>ny-2 && j>0 && j<nx-1 ) tmp_image[j+i*nx] += lastRowRecv[j] + 0.1*image[j + (i-1)*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j+1 + i*nx];
+      else {                            tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j + (i-1)*nx] + 0.1*0.1*image[j + (i+1)*nx]; } 
+      }
+    }
     free(firstRowRecv);
     free(firstRowSend);
     free(lastRowRecv);
