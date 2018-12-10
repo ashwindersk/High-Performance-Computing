@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
   }
  
   double toc = wtime();
-  //printf("rank %d is about to call Finalize\n", rank);
+  printf("rank %d is about to call Finalize\n", rank);
 
   MPI_Finalize();
   // Output
