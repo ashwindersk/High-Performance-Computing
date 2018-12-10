@@ -151,7 +151,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   else if(rank == 15)
   {
 
-    sending the first row of the array to rank 14;
+    //sending the first row of the array to rank 14
     int start = 0;
     int end = nx - 1;
 
