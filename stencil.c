@@ -104,7 +104,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, MPI_ANY_TAG, lastRowRecv, nx, MPI_FLOAT, rank, MPI_ANY_TAG, MPI_COMM_WORLD, status);
     for(int i = 0 ; i< nx ; i++){
-      printf("value: %d", lastRowRecv[i]);
+      printf("value: %f", lastRowRecv[i]);
     }
    
   }
@@ -133,7 +133,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, MPI_ANY_TAG , firstRowRecv , nx, MPI_FLOAT, rank, MPI_ANY_TAG, MPI_COMM_WORLD, status);
     for(int i = 0 ; i< nx ; i++){
-      printf("value: %d", firstRowRecv[i]);
+      printf("value: %f", firstRowRecv[i]);
     }
 
 
