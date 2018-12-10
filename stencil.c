@@ -62,11 +62,14 @@ int main(int argc, char *argv[])
   double tic = wtime();
   for (int t = 0; t <  niters; ++t)
   { 
-    printf("iteration : %d", niters);
+    if(t == 99){
+      printf("iteration : %d\n and rank %d", niters, rank);
+    }
+
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
-  printf("finished stencil");
+  printf("finished stencil\n");
   double toc = wtime();
   
 
