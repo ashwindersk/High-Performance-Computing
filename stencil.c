@@ -131,6 +131,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     firstRowSend = extractElements(firstRowSend, image, firstRowStart, firstRowEnd);
     
     lastRowSend = extractElements(lastRowSend, image, lastRowStart, lastRowEnd);
+    
 
     //Sending and receving data from each rank above and below in the image
     MPI_Status *status;
@@ -144,8 +145,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   
     
     
-    free(firstRowRecv);
-    free(firstRowSend);
+    // free(firstRowRecv);
+    // free(firstRowSend);
     free(lastRowRecv);
     free(lastRowSend);
 
