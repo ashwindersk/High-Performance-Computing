@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  printf("rank %d called Init", rank);
+  printf("rank %d called Init\n", rank);
   float *image;
   float *tmp_image;
   if (rank == 0)
@@ -134,7 +134,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
   
 
     MPI_Sendrecv( firstRowSend , nx, MPI_FLOAT, rank - 1, 0 , firstRowRecv , nx, MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD, status);
-    printf("deadlock");
+    printf("deadlock\n");
 
 
   }
@@ -156,6 +156,9 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //MPI_Sendrecv(firstRowSend, nx, MPI_FLOAT, 1, 0, firstRowRecv, nx, MPI_FLOAT, 15, 0, MPI_COMM_WORLD, status);
 
     
+  }
+  else{
+    printf("Hey from rank %d\n", rank);
   }
 
   //   //manually amending the values of the corners
