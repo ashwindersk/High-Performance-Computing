@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
+  MPI_Finalize();
   double toc = wtime();
 
   // Output
@@ -73,7 +74,7 @@ int main(int argc, char *argv[])
 
   output_image(OUTPUT_FILE, nx, ny, image);
   free(image);
-  MPI_Finalize();
+  
 }
 
 float *extractElements(float *subArray, float *array, int start, int end)
