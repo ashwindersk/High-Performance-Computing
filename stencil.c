@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
 
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
-  //printf("Current rank is %d and first value of buffer is %f", rank,bufferImg[0] );
 
   // Call the stencil kernel
   double tic = wtime();
@@ -64,9 +63,9 @@ int main(int argc, char *argv[])
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
   }
-  MPI_Finalize();
+ 
   double toc = wtime();
-
+  MPI_Finalize();
   // Output
   printf("------------------------------------\n");
   printf(" runtime: %lf s\n", toc - tic);
