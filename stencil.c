@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   {
 
     if(rank == 0 || rank ==1){
-      printf("iteration : %d\n on rank %d",t, rank);
+      printf("iteration : %d on rank %d\n",t, rank);
     }
     stencil(nx, ny / 16, bufferImg, bufferTempImg, rank);
     //stencil(nx, ny / 16, bufferTempImg, bufferImg, rank);
