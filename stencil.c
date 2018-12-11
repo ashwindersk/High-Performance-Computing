@@ -10,6 +10,10 @@ void stencil(const int nx, const int ny, float *image, float *tmp_image, int ran
 void init_image(const int nx, const int ny, float *image, float *tmp_image);
 void output_image(const char *file_name, const int nx, const int ny, float *image);
 double wtime(void);
+
+int rows;
+int cols;
+
 int main(int argc, char *argv[])
 {
 
@@ -49,6 +53,8 @@ int main(int argc, char *argv[])
     // Set the input image
     init_image(nx, ny, image, tmp_image);
   }
+  rows = ny;
+  rows = nx;
   int sectionSize = ny * nx / 16;
 
   float *bufferImg = malloc((ny * nx / 16) * sizeof(float));
@@ -117,8 +123,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //printf("tmp image %f, image %f\n", tmp_image[5+6*nx], image[5+6*nx] );
 
     printf("%d  %d\n", nx, ny );
-    for(int i = 0 ; i < 64; i++){
-     for( int j =0 ; j < 1024 ; j++){    
+    for(int i = 0 ; i < rows; i++){
+     for( int j =0 ; j < cols ; j++){    
        tmp_image[j+i*nx]  = image[j+i*nx] * 0.6f;
        
                    
@@ -161,11 +167,11 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     // }
    
 
-    for(int i =0  ; i< 64 ; i++){
-      for( int j= 0 ; j< 1024 ; j++){
-        printf("value %f\n", image[j+i*nx]);
-      }
-    }
+    // for(int i =0  ; i< 64 ; i++){
+    //   for( int j= 0 ; j< 1024 ; j++){
+    //     printf("value %f\n", image[j+i*nx]);
+    //   }
+    // }
 
     for(int i = 0 ; i < 64; i++){
      for( int j =0 ; j< 1024 ; j++){       
