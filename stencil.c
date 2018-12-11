@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
   }
   double toc = wtime();
 
-
+  MPI_Finalize();
   // Output
   printf("------------------------------------\n");
   printf(" runtime: %lf s\n", toc-tic);
@@ -96,6 +96,7 @@ int main(int argc, char *argv[]) {
 
   output_image(OUTPUT_FILE, nx, ny, image);
   free(image);
+
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
