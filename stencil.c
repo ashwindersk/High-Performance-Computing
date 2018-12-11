@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   // Set the input image
   init_image(nx, ny, image, tmp_image);
 
-
+  printf("hey\n");
   //Figuring out which processors are involved in the computation 
   MPI_Init(&argc, &argv);
 
