@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
   float *tmp_image;
   if (rank == 0)
   {
-    image =malloc(sizeof(float) * ny * nx, 64);
+    image =malloc(sizeof(float) * ny * nx);
 
-    tmp_image = malloc(sizeof(float) * ny * nx, 64);
+    tmp_image = malloc(sizeof(float) * ny * nx);
 
     // Set the input image
     init_image(nx, ny, image, tmp_image);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   
 
   MPI_Finalize();
-  Output
+  //Output
   printf("------------------------------------\n");
   printf(" runtime: %lf s\n", toc - tic);
   printf("------------------------------------\n");
