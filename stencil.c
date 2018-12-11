@@ -77,8 +77,8 @@ int main(int argc, char *argv[]) {
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
-    stencil(nx, ny,bufferImg, bufferTmpImg, rank);
-    stencil(nx, ny, bufferTmpImg, bufferImg, rank);
+    stencil(nx, ny,bufferImg, bufferTempImg, rank);
+    stencil(nx, ny, bufferTempImg, bufferImg, rank);
   }
   double toc = wtime();
 
@@ -117,7 +117,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     
 
     MPI_Status *status;
-    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank +1, 0, lastRowRecv, nx MPI_FLOAT, rank+1,0, MPI_COMM_WORLD, status);
+    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank +1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1,0, MPI_COMM_WORLD, status);
 
 
 
@@ -134,7 +134,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     
 
     MPI_Status *status;
-    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
+    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx, MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
   
 
 
