@@ -124,7 +124,9 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     printf("%d  %d\n", nx, ny );
     for(int i = 0 ; i < 64; i++){
-     for( int j =0 ; j < 1024 ; j++){    
+     for( int j =0 ; j < 1024 ; j++){   
+      printf("new tmp_image value %f \n ", tmp_image[j+i*nx]);
+
        tmp_image[j+i*nx]  = image[j+i*nx] * 0.6f;
        
                    
@@ -135,7 +137,6 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
       if(j>0)     tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
       if(j<nx-1)  tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
       if(i==ny-1) tmp_image[j+i*nx] += lastRowRecv[j]*0.1;
-      printf("new tmp_image value %f \n ", tmp_image[j+i*nx]);
      }
     }
     free(lastRowSend);
