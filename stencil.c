@@ -17,8 +17,9 @@ double wtime(void);
 
 int main(int argc, char *argv[]) {
 
-  // Check usage
-  if (argc != 4) {
+   // Check usage
+  if (argc != 4)
+  {
     fprintf(stderr, "Usage: %s nx ny niters\n", argv[0]);
     exit(EXIT_FAILURE);
   }
@@ -30,33 +31,32 @@ int main(int argc, char *argv[]) {
   int niters = atoi(argv[3]);
 
   // Allocate the images
-  
 
-  int rank;
-  int size;
-
+  //Figuring out which processors are involved in the computation
   MPI_Init(&argc, &argv);
+
+  int size;
+  int rank;
+
   MPI_Comm_size(MPI_COMM_WORLD, &size);
+
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  int sectionSize = ny*nx/16;
-  float *section    = malloc(sizeof(float) * sectionSize);
-  float *tmpSection = malloc(sizeof(float) * sectionSize);
-
-  float *tmp_image;
+  //printf("rank %d called Init\n", rank);
   float *image;
+  float *tmp_image;
+  if (rank == 0)
+  {
+    image =malloc(sizeof(float) * ny * nx);
 
+    tmp_image = malloc(sizeof(float) * ny * nx);
 
-  // if(rank==0){
-  //   image = _mm_malloc(sizeof(float)*ny*nx,64);
+    // Set the input image
+    init_image(nx, ny, image, tmp_image);
+  }
+  int sectionSize = ny * nx / 16;
 
-  //   tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
-  //   init_image(nx, ny, image, tmp_image);
-  // }
-
-  // //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
-
-  printf("size %d \n", size);
-  printf("rank %d running\n", rank);
+  float *bufferImg = malloc((ny * nx / 16) * sizeof(float));
+  float *bufferTempImg = malloc((ny * nx / 16) * sizeof(float));
 
   // // Set the input image
 
