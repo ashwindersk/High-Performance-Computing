@@ -138,11 +138,12 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
     MPI_Status *status;
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx, MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
-  MPI_Send(lastRowSend, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
-    MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank-11, 0, MPI_COMM_WORLD,status );
+    MPI_Send(lastRowSend, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
+    MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD,status );
 
 
   }
+  
 
 
  }
