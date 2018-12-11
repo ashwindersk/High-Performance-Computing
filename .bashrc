@@ -13,4 +13,4 @@ module add openmpi/intel/64/1.6.5
 #module add languages/gcc-7.1.0
 module add tools/intel_builds/tau-2.23.1-openmpi
 #module add openmpi/gcc/64/1.6.5
-#module add tools/gnu_builds/tau-2.23.1-openmpi
+module add tools/gnu_builds/tau-2.23.1-openmpi
