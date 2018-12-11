@@ -47,6 +47,8 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+  printf("%d", rank);
+  printf("%d", size);
 
   int sectionSize = ny*nx/16;
   float * bufferImg = (float *)malloc((ny*nx/16) * sizeof(float));
@@ -63,7 +65,7 @@ int main(int argc, char *argv[]) {
 
   }
   
-  MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
+  //MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
 
 
   for(int i =0 ; i< ny/16 ; i++){
