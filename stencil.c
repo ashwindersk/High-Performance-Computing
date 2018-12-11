@@ -78,7 +78,9 @@ int main(int argc, char *argv[]) {
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
-    printf("iteration : %d\n", t);
+    if(rank==1 || rank ==0){
+      printf("iteration : %d\n", t);
+    }
     stencil(nx, ny,bufferImg, bufferTempImg, rank);
     stencil(nx, ny, bufferTempImg, bufferImg, rank);
   }
