@@ -57,6 +57,7 @@ int main(int argc, char *argv[]) {
 
   float *bufferImg = malloc((ny * nx / 16) * sizeof(float));
   float *bufferTempImg = malloc((ny * nx / 16) * sizeof(float));
+  printf("rank %d\n", rank);
 
   // // Set the input image
 
