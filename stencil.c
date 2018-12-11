@@ -28,10 +28,11 @@ int main(int argc, char *argv[]) {
   int ny = atoi(argv[2]);
   int niters = atoi(argv[3]);
 
-  // Allocate the images
-  float *image =_mm_malloc(sizeof(float)*ny*nx,64);
 
-  float *tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
+  // Allocate the images
+  float *image;
+
+  float *tmp_image;
 
   // Set the input image
   init_image(nx, ny, image, tmp_image);
@@ -47,7 +48,28 @@ int main(int argc, char *argv[]) {
 
   MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 
-  printf("Current processor identifier: %d out of %d\n", rank, size );
+  int sectionSize = ny*nx/16;
+  float * bufferImg = (float *)malloc((ny*nx/16) * sizeof(float));
+  float * bufferTempImg = (float *)malloc((ny*nx/16) * sizeof(float));
+
+  if(rank ==0){
+    image =malloc(sizeof(float)*ny*nx);
+
+    tmp_image = malloc(sizeof(float)*ny*nx);
+
+    init_image(nx,ny,image,tmp_image);
+
+  }
+
+  MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
+
+
+  for(int i =0 ; i< ny/16 ; i++){
+    for(int j = 0 ; j< nx ; j++){
+      printf("bufferValue %f",bufferImage[j+i*nx] );
+    }
+  }
+
 
 
   
@@ -74,46 +96,6 @@ int main(int argc, char *argv[]) {
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
 
-
-  //manually amending the values of the corners
- tmp_image[0]                   = 0.6f * image[0]                  + 0.1f*image[1 + ny*0]                  + 0.1f*image[0 + ny*1];
- tmp_image[nx-1 + ny*0]         = 0.6f * image[nx-1 + ny*0]        + 0.1f*image[nx-2 + ny*0]               + 0.1f*image[nx-1 + ny*1];
- tmp_image[0 + ny*(nx-1)]       = 0.6f * image[0 + ny*(ny-1)]      + 0.1f*image[0 +ny*(ny-2)]              + 0.1f*image[(1 + ny*(ny-1))];
- tmp_image[nx-1 + (ny)*(ny-1)]  = 0.6f * image[nx-1 + (ny)*(ny-1)] + 0.1f*image[nx-1 + (ny)*(nx-2)]        + 0.1f*image[nx-2 +(nx-1)*(ny)];
-
-
-  //top row
-  for(int j = 1; j<nx-1; ++j){
-    tmp_image[j+ny*0] = 0.1f*image[j-1 + ny*0] + 0.6f*image[j+ny*0]  + 0.1f*image[j+1 + ny*0] + 0.1f*image[j+ny*1];
-  }
-
-  //first column
-  for(int i = 1; i< ny-1 ; ++i){
-   tmp_image[0+ny*i] = 0.6f*image[0+ny*i] + 0.1f*image[1+ ny*i] + 0.1f*image[0+ny*(i-1)] + 0.1f*image[0 + ny*(i+1)];
-  }
-
-  //editing the values of the (ny-1)*(nx-1) pisxels
-  for(int i = 1 ; i<ny-1; ++i){
-   for(int j = 1 ; j<nx-1; ++j){
-     int base = j+ny*i;
-     __assume_aligned(image,64);
-     __assume_aligned(tmp_image,64);
-     #pragma omp simd
-     
-     tmp_image[base] = image[base-1]*0.1f   + image[base]*0.6f + image[base+1]*0.1f + image[base -ny]*0.1f + image[base +ny]*0.1f;
-   }
-  }
-  //last column
-  for(int i = 1; i< ny-1 ; ++i){
-    int base  = nx-1 + ny*i;
-    tmp_image[base] = 0.6f*image[base] + 0.1f*image[base-1] + 0.1f*image[base -ny] + 0.1f*image[base + ny];
-  }
-
-
-  //last row
-  for(int j = 1; j<nx-1; ++j){
-   tmp_image[j + ny*(nx-1)] = 0.6f*image[j+ ny*(nx-1)] + 0.1f*image[(j-1)+ ny*(nx-1)] + 0.1f*image[(j+1)+ ny*(nx-1)] + 0.1f*image[j+ ny*(nx-2)];
-  }
 
  }
 
