@@ -52,6 +52,8 @@ int main(int argc, char *argv[]) {
   float * bufferImg = (float *)malloc((ny*nx/16) * sizeof(float));
   float * bufferTempImg = (float *)malloc((ny*nx/16) * sizeof(float));
 
+
+  printf("checkpoint\n");
   if(rank ==0){
     image =malloc(sizeof(float)*ny*nx);
 
@@ -60,7 +62,7 @@ int main(int argc, char *argv[]) {
     init_image(nx,ny,image,tmp_image);
 
   }
-  printf("checkpoint\n");
+  
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
 
 
