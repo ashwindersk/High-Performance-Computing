@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
   for(int i =0 ; i< ny/16 ; i++){
     for(int j = 0 ; j< nx ; j++){
-      printf("bufferValue %f",bufferImage[j+i*nx] );
+      printf("bufferValue %f",bufferImg[j+i*nx] );
     }
   }
 
