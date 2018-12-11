@@ -12,6 +12,9 @@ void stencil(const int nx, const int ny, float * image, float * tmp_image);
 void init_image(const int nx, const int ny, float * image, float * tmp_image);
 void output_image(const char * file_name, const int nx, const int ny, float *image);
 double wtime(void);
+
+
+
 int main(int argc, char *argv[]) {
 
   // Check usage
@@ -51,7 +54,7 @@ int main(int argc, char *argv[]) {
     init_image(nx, ny, image, tmp_image);
   }
 
-  MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
+  //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
 
   printf("rank %d running\n", rank);
 
