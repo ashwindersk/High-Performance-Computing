@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   // Set the input image
   
 
-  printf("hey\n");
+  
   //Figuring out which processors are involved in the computation 
   MPI_Init(&argc, &argv);
 
@@ -47,15 +47,14 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  printf("%d", rank);
-  printf("%d", size);
+  
 
   int sectionSize = ny*nx/16;
   float * bufferImg = (float *)malloc((ny*nx/16) * sizeof(float));
   float * bufferTempImg = (float *)malloc((ny*nx/16) * sizeof(float));
 
 
-  printf("checkpoint\n");
+ 
   if(rank ==0){
     image = malloc(sizeof(float)*ny*nx);
 
@@ -65,12 +64,12 @@ int main(int argc, char *argv[]) {
 
   }
   
-  //MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
+  MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
 
 
   for(int i =0 ; i< ny/16 ; i++){
     for(int j = 0 ; j< nx ; j++){
-      printf("bufferValue %f",bufferImg[j+i*nx] );
+      printf("bufferValue %f\n",bufferImg[j+i*nx] );
     }
   }
 
