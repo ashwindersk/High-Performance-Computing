@@ -131,7 +131,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     free(lastRowRecv);
 
   }
-  else if(rank==1){
+  if(rank==1){
 
     int start = (ny-1) * nx;
     int end   = (ny-1) * nx + (nx-1);
@@ -151,7 +151,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
   }
   else{
-    
+
   }
   
 
