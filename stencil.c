@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
     init_image(nx,ny,image,tmp_image);
 
   }
-
+  printf("checkpoint\n");
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
 
 
