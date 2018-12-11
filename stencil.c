@@ -111,16 +111,20 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank + 1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     MPI_Send(lastRowSend, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD );
     MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
-    // for(int i = 0 ; i < ny; i++){
-    //  for( int j =0 ; j< nx ; j++){       
-    //                                    tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
-    //   if(i<1 && j>0 && j<nx-1)          tmp_image[j+i*nx] +=  image[(j+1) + i*nx]*0.1 + 0.1*image[j + (i+1)*nx] +  0.1*image[(j-1) + i*nx];
-    //   else if(j<1)                      tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
-    //   else if(j>nx-2)                   tmp_image[j+i*nx] += 0.1*image[j-1+i*nx] + 0.1*image[j+(i-1)*nx] + 0.1*image[j+(i+1)*nx];
-    //   else if(i>ny-2 && j>0 && j<nx-1 ) tmp_image[j+i*nx] += lastRowRecv[j] + 0.1*image[j + (i-1)*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j+1 + i*nx];
-    //   else {                            tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j + (i-1)*nx] + 0.1*0.1*image[j + (i+1)*nx]; } 
-    //  }
-    // }
+
+    //Attempt 1 at implementing
+
+    for(int i = 0 ; i < ny; i++){
+     for( int j =0 ; j< nx ; j++){       
+      tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
+      if(i>0) tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
+      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)] *0.1;
+      if(j>0) tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
+      if(j<nx-1) tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
+      if(i==nx-1) tmp_image[j+i*nx] += lastRowRecv[j]*0.1;
+
+     }
+    }
     free(lastRowSend);
     free(lastRowRecv);
   }
@@ -148,6 +152,18 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //  else {                            tmp_image[j+i*nx] += 0.1*image[j+1+i*nx] + 0.1*image[j-1 + i*nx] + 0.1*image[j + (i-1)*nx] + 0.1*0.1*image[j + (i+1)*nx]; } 
     //  }
     // }
+
+    for(int i = 0 ; i < ny; i++){
+     for( int j =0 ; j< nx ; j++){       
+      tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
+      if(i>0) tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
+      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)] *0.1;
+      if(j>0) tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
+      if(j<nx-1) tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
+      if(i=0) tmp_image[j+i*nx] += firstRowRecv[j]*0.1;
+
+     }
+    }
     free(firstRowSend);
     free(firstRowRecv);
   }
@@ -179,7 +195,15 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Send(lastRowSend, nx, MPI_FLOAT,rank+1, 0, MPI_COMM_WORLD );
     MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
     
-
+    for(int i = 0 ; i < ny; i++){
+     for( int j =0 ; j< nx ; j++){       
+      tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
+      if(i>0) tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
+      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)] *0.1;
+      if(j>0) tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
+      if(j<nx-1) tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
+     }
+    }
     // for(int i = 0 ; i < ny; i++){
     //   for( int j =0 ; j< nx ; j++){       
     //                                     tmp_image[j+i*nx]= image[j+i*nx] * 0.6;
