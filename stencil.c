@@ -30,9 +30,7 @@ int main(int argc, char *argv[]) {
   int niters = atoi(argv[3]);
 
   // Allocate the images
-  float *image =_mm_malloc(sizeof(float)*ny*nx,64);
-
-  float *tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
+  
 
   int rank;
   int size;
@@ -41,18 +39,19 @@ int main(int argc, char *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   int sectionSize = ny*nx/16;
-  float *section ;
-  float *tmpSection ;
+  float *section    = malloc(sizeof(float) * sectionSize);
+  float *tmpSection = malloc(sizeof(float) * sectionSize);
 
-  
+  float *tmp_image;
+  float *image;
 
 
-  // if(rank==0){
-  //   section= (float*) malloc(sectionSize * sizeof(float));
-  //   tmpSection= (float*) malloc(sectionSize * sizeof(float));
+  if(rank==0){
+    image =_mm_malloc(sizeof(float)*ny*nx,64);
 
-  //   init_image(nx, ny, image, tmp_image);
-  // }
+    tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
+    init_image(nx, ny, image, tmp_image);
+  }
 
   //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
 
