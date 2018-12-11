@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
       printf("iteration : %d\n", t);
     }
     stencil(nx, ny,bufferImg, bufferTempImg, rank);
-    stencil(nx, ny, bufferTempImg, bufferImg, rank);
+    //stencil(nx, ny, bufferTempImg, bufferImg, rank);
   }
   double toc = wtime();
 
