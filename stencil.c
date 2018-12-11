@@ -122,7 +122,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     printf("hey\n");
     MPI_Status *status;
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank +1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1,0, MPI_COMM_WORLD, status);
-    MPI_Send(lastRowSend, nx ,MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD );
+    MPI_Ssend(lastRowSend, nx ,MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD );
     MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD,status );
 
 
@@ -131,6 +131,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     free(lastRowRecv);
 
   }
+
   if(rank==1){
 
     int start = (ny-1) * nx;
@@ -144,7 +145,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     MPI_Status *status;
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx, MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
     MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD,status );
-    MPI_Send(lastRowSend, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
+    MPI_Ssend(lastRowSend, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
     
     free(lastRowSend);
     free(lastRowRecv);
