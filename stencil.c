@@ -132,11 +132,11 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
       if(i>0)     {tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;}
                    
       if(i<ny-1)  {tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;}
-      
+      printf("new tmp_image value %f \n ", tmp_image[j+i*nx]);
       if(j>0)     {tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;}
       if(j<nx-1)  {tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;}
       if(i==ny-1) {tmp_image[j+i*nx] += lastRowRecv[j]*0.1;}
-      printf("new tmp_image value %f \n ", tmp_image[j+i*nx]);
+      
 
      }
     }
