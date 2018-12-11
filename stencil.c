@@ -40,14 +40,14 @@ int main(int argc, char *argv[]) {
 
   
   //Figuring out which processors are involved in the computation 
-  MPI_Init(&argc, &argv);
+  //MPI_Init(&argc, &argv);
 
   int size;
   int rank;
 
-  MPI_Comm_size(MPI_COMM_WORLD, &size);
+  //MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  //MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   
 
   int sectionSize = ny*nx/16;
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 
 
   
-
+  int rank=0;
   ny = ny/16;
 
   // Call the stencil kernel
@@ -122,7 +122,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     lastRowSend = extractElements(lastRowSend, image, start, end);
     
     printf("hey\n");
-    MPI_Status *status;
+    //MPI_Status *status;
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank +1, 0, lastRowRecv, nx, MPI_FLOAT, rank+1,0, MPI_COMM_WORLD, status);
     // MPI_Ssend(lastRowSend, nx ,MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD );
     // MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD,status );
@@ -144,7 +144,7 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     lastRowSend = extractElements(lastRowSend, image, start, end);
     
     printf("hey 1\n");
-    MPI_Status *status;
+    //MPI_Status *status;
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx, MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
     // MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD,status );
     // MPI_Ssend(lastRowSend, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
