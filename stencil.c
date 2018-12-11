@@ -150,6 +150,9 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     free(lastRowRecv);
 
   }
+  else{
+    
+  }
   
 
 
