@@ -161,8 +161,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     // }
    
 
-    for(int i =0  ; i< ny ; i++){
-      for( int j= 0 ; j< nx ; j++){
+    for(int i =0  ; i< 64 ; i++){
+      for( int j= 0 ; j< 1024 ; j++){
         printf("value %f\n", image[j+i*nx]);
       }
     }
