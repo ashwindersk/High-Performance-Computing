@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 
   MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
 
-
+  printf("rank %d running\n", rank);
 
 
   // Set the input image
