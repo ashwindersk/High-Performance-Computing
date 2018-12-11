@@ -1,0 +1,3 @@
+/panfs/panasas01/cosc/ak16625/.bash_profile: line 16: T: command not found
+/panfs/panasas01/cosc/ak16625/.bash_profile: line 18: alias: mpirun -np 4 ./stencil: not found
+/cm/local/apps/torque/4.2.4.1/spool/mom_priv/jobs/7817744.master.cm.cluster.SC: line 38: mpirun: command not found
