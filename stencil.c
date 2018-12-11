@@ -122,24 +122,24 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //tmp_image[5+6*nx]  = image[5+6*nx] * 0.6;
     //printf("tmp image %f, image %f\n", tmp_image[5+6*nx], image[5+6*nx] );
 
-    printf("%d  %d\n", nx, ny );
-    for(int i = 0 ; i < 64; i++){
-     for( int j =0 ; j < 1024 ; j++){   
+    // printf("%d  %d\n", nx, ny );
+    // for(int i = 0 ; i < 64; i++){
+    //  for( int j =0 ; j < 1024 ; j++){   
 
-       tmp_image[j+i*nx]  = image[j+i*nx] * 0.6f;
+    //    tmp_image[j+i*nx]  = image[j+i*nx] * 0.6f;
        
                    
-      if(i>0)     {tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;}
+    //   if(i>0)     {tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;}
                    
-      if(i<ny-1)  {tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;}
+    //   if(i<ny-1)  {tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;}
       
-      if(j>0)     {tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;}
-      if(j<nx-1)  {tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;}
-      if(i==ny-1) {tmp_image[j+i*nx] += lastRowRecv[j]*0.1;}
+    //   if(j>0)     {tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;}
+    //   if(j<nx-1)  {tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;}
+    //   if(i==ny-1) {tmp_image[j+i*nx] += lastRowRecv[j]*0.1;}
       
 
-     }
-    }
+    //  }
+    // }
     free(lastRowSend);
     free(lastRowRecv);
   }
