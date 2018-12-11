@@ -1,0 +1,7 @@
+
+stencil:44225 terminated with signal 11 at PC=2aaab05b9b37 SP=7fffffffc260.  Backtrace:
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_pml_cm.so(mca_pml_cm_recv+0x437)[0x2aaab05b9b37]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Recv+0x1ff)[0x2aaaaad4e59f]
+stencil(main+0x527)[0x402487]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401de9]

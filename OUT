@@ -1,22 +1,16 @@
-Running on host node31-029
-Time is Sat Dec 8 16:27:58 GMT 2018
+Running on host node31-030
+Time is Tue Dec 11 16:44:00 GMT 2018
 Directory is /panfs/panasas01/cosc/ak16625/High-Performance-Computing
-PBS job ID is 7795892.master.cm.cluster
+PBS job ID is 7817312.master.cm.cluster
 This jobs runs on the following machines:
 
-Current processor identifier: 1 out of 4
-Current processor identifier: 2 out of 4
-Current processor identifier: 3 out of 4
-Current processor identifier: 0 out of 4
-------------------------------------
- runtime: 0.105620 s
-------------------------------------
-------------------------------------
- runtime: 0.105143 s
-------------------------------------
-------------------------------------
- runtime: 0.104834 s
-------------------------------------
-------------------------------------
- runtime: 0.106013 s
-------------------------------------
+iteration : 0
+hey 1
+hey 1
+iteration : 1
+hey 1
+iteration : 0
+hey
+hey
+iteration : 1
+hey

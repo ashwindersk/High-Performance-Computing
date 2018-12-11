@@ -1,0 +1,25 @@
+/panfs/panasas01/cosc/ak16625/.bash_profile: line 16: T: command not found
+/panfs/panasas01/cosc/ak16625/.bash_profile: line 18: alias: mpirun -np 4 ./stencil: not found
+
+stencil:44225 terminated with signal 11 at PC=2aaab05b9b37 SP=7fffffffc260.  Backtrace:
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/openmpi/mca_pml_cm.so(mca_pml_cm_recv+0x437)[0x2aaab05b9b37]
+/cm/shared/apps/openmpi/intel/64/1.6.5/lib64/libmpi.so.1(PMPI_Recv+0x1ff)[0x2aaaaad4e59f]
+stencil(main+0x527)[0x402487]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x2aaaac3fcd5d]
+stencil[0x401de9]
+--------------------------------------------------------------------------
+mpirun has exited due to process rank 1 with PID 44225 on
+node node31-030 exiting improperly. There are two reasons this could occur:
+
+1. this process did not call "init" before exiting, but others in
+the job did. This can cause a job to hang indefinitely while it waits
+for all processes to call "init". By rule, if one process calls "init",
+then ALL processes must call "init" prior to termination.
+
+2. this process called "init", but exited without calling "finalize".
+By rule, all processes that call "init" MUST call "finalize" prior to
+exiting or it will be considered an "abnormal termination"
+
+This may have caused other processes in the application to be
+terminated by signals sent by mpirun (as reported here).
+--------------------------------------------------------------------------
