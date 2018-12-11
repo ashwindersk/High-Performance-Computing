@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   float *tmp_image;
 
   // Set the input image
-  init_image(nx, ny, image, tmp_image);
+  
 
   printf("hey\n");
   //Figuring out which processors are involved in the computation 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
   MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-  MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   printf("%d", rank);
   printf("%d", size);
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 
   printf("checkpoint\n");
   if(rank ==0){
-    image =malloc(sizeof(float)*ny*nx);
+    image = malloc(sizeof(float)*ny*nx);
 
     tmp_image = malloc(sizeof(float)*ny*nx);
 
