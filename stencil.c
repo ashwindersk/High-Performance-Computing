@@ -10,7 +10,7 @@
 
 
 
-void stencil(const int nx, const int ny, float * image, float * tmp_image);
+void stencil(const int nx, const int ny, float * image, float * tmp_image,int rank);
 void init_image(const int nx, const int ny, float * image, float * tmp_image);
 void output_image(const char * file_name, const int nx, const int ny, float *image);
 double wtime(void);
@@ -67,23 +67,18 @@ int main(int argc, char *argv[]) {
   MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
 
 
-  for(int i =0 ; i< ny/16 ; i++){
-    for(int j = 0 ; j< nx ; j++){
-      printf("bufferValue %f\n",bufferImg[j+i*nx] );
-    }
-  }
-
+  
 
 
   
 
-
+  ny = ny/16;
 
   // Call the stencil kernel
   double tic = wtime();
   for (int t = 0; t < niters; ++t) {
-    stencil(nx, ny, image, tmp_image);
-    stencil(nx, ny, tmp_image, image);
+    stencil(nx, ny,bufferImg, bufferTmpImg, rank);
+    stencil(nx, ny, bufferTmpImg, bufferImg, rank);
   }
   double toc = wtime();
 
@@ -98,7 +93,52 @@ int main(int argc, char *argv[]) {
 
 }
 
-void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
+
+float *extractElements(float *subArray, float *array, int start, int end)
+{
+
+  for (int i = start; i <= end; i++)
+  {
+    subArray[i - start] = array[i];
+  }
+
+  return subArray;
+}
+
+void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
+
+  if(rank==0){
+    int start = (ny-1) * nx;
+    int end   = (ny-1) * nx + (nx-1);
+
+    float * lastRowSend = (float * ) malloc(nx*sizeof(float));
+    float * lastRowRecv = (float * ) malloc(nx*sizeof(float));
+    lastRowSend = extractElements(lastRowSend, image, start, end);
+    
+
+    MPI_Status *status;
+    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank +1, 0, lastRowRecv, nx MPI_FLOAT, rank+1,0, MPI_COMM_WORLD, status);
+
+
+
+
+
+  }
+  if(rank==1){
+      int start = (ny-1) * nx;
+    int end   = (ny-1) * nx + (nx-1);
+
+    float * lastRowSend = (float * ) malloc(nx*sizeof(float));
+    float * lastRowRecv = (float * ) malloc(nx*sizeof(float));
+    lastRowSend = extractElements(lastRowSend, image, start, end);
+    
+
+    MPI_Status *status;
+    MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
+  
+
+
+  }
 
 
  }
