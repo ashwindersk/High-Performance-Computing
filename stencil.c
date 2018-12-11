@@ -116,8 +116,8 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     //tmp_image[5+6*nx]  = image[5+6*nx] * 0.6;
     //printf("tmp image %f, image %f\n", tmp_image[5+6*nx], image[5+6*nx] );
 
-    for(int i = 0 ; i < ny-1; i++){
-     for( int j =0 ; j < nx-1 ; j++){    
+    for(int i = 0 ; i < 63; i++){
+     for( int j =0 ; j < 1023 ; j++){    
        //tmp_image[5+6*nx]  = image[5+6*nx] * 0.6f;
        printf("hey\n");
        //printf("access value: %d\n", j+i*nx);
