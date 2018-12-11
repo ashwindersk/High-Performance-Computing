@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
 
   }
   
-  MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
+  //MPI_Scatter(image, sectionSize, MPI_FLOAT, bufferImg, sectionSize, MPI_FLOAT,0,MPI_COMM_WORLD);
 
 
   
