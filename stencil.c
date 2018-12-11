@@ -116,12 +116,12 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     for(int i = 0 ; i < ny; i++){
      for( int j =0 ; j< nx ; j++){       
-      tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
-      if(i>0) tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
-      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)] *0.1;
-      if(j>0) tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
-      if(j<nx-1) tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
-      if(i==nx-1) tmp_image[j+i*nx] += lastRowRecv[j]*0.1;
+                  tmp_image[j+i*nx]  = image[j+i*nx] * 0.6;
+      if(i>0)     tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
+      if(i<ny-1)  tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;
+      if(j>0)     tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
+      if(j<nx-1)  tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
+      if(i==ny-1) tmp_image[j+i*nx] += lastRowRecv[j]*0.1;
 
      }
     }
@@ -155,12 +155,12 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
 
     for(int i = 0 ; i < ny; i++){
      for( int j =0 ; j< nx ; j++){       
-      tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
-      if(i>0) tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
-      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)] *0.1;
-      if(j>0) tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
+                 tmp_image[j+i*nx]  = image[j+i*nx] * 0.6;
+      if(i>0)    tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
+      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;
+      if(j>0)    tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
       if(j<nx-1) tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
-      if(i=0) tmp_image[j+i*nx] += firstRowRecv[j]*0.1;
+      if(i==0)   tmp_image[j+i*nx] += firstRowRecv[j]*0.1;
 
      }
     }
@@ -197,10 +197,10 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     
     for(int i = 0 ; i < ny; i++){
      for( int j =0 ; j< nx ; j++){       
-      tmp_image[j+i*nx] = image[j+i*nx] * 0.6;
-      if(i>0) tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
-      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)] *0.1;
-      if(j>0) tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
+                 tmp_image[j+i*nx]  = image[j+i*nx] * 0.6;
+      if(i>0)    tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;
+      if(i<ny-1) tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;
+      if(j>0)    tmp_image[j+i*nx] += image[j-1+i*nx]*0.1;
       if(j<nx-1) tmp_image[j+i*nx] += image[j+1 + i*nx]*0.1;
      }
     }
