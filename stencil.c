@@ -124,7 +124,8 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
 
 
 
-
+    free(lastRowSend);
+    free(lastRowRecv);
 
   }
   if(rank==1){
@@ -135,13 +136,14 @@ void stencil(const int nx, const int ny,  float *restrict image, float *restrict
     float * lastRowRecv = (float * ) malloc(nx*sizeof(float));
     lastRowSend = extractElements(lastRowSend, image, start, end);
     
-    printf("hey\n");
+    printf("hey 1\n");
     MPI_Status *status;
     //MPI_Sendrecv(lastRowSend, nx, MPI_FLOAT, rank -1, 0, lastRowRecv, nx, MPI_FLOAT, rank-1,0, MPI_COMM_WORLD, status);
     MPI_Recv(lastRowRecv, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD,status );
     MPI_Send(lastRowSend, nx ,MPI_FLOAT, rank-1, 0, MPI_COMM_WORLD );
     
-
+   free(lastRowSend);
+   free(lastRowRecv);
 
   }
   
