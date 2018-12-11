@@ -111,6 +111,8 @@ float *extractElements(float *subArray, float *array, int start, int end)
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image, int rank) {
 
+  float * lastRowSend;
+    float * lastRowRecv;
   if(rank==0){
     int start = (ny-1) * nx;
     int end   = (ny-1) * nx + (nx-1);
