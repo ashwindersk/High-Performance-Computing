@@ -47,12 +47,12 @@ int main(int argc, char *argv[]) {
   
 
 
-  if(rank==0){
-    section= (float*) malloc(sectionSize * sizeof(float));
-    tmpSection= (float*) malloc(sectionSize * sizeof(float));
+  // if(rank==0){
+  //   section= (float*) malloc(sectionSize * sizeof(float));
+  //   tmpSection= (float*) malloc(sectionSize * sizeof(float));
 
-    init_image(nx, ny, image, tmp_image);
-  }
+  //   init_image(nx, ny, image, tmp_image);
+  // }
 
   //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
 
