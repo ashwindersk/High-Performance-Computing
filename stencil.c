@@ -113,7 +113,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD , status);
 
     //Attempt 1 at implementing
-    tmp_image[j+i*nx]  = image[j+i*nx] * 0.6;
+    tmp_image[5+6*nx]  = image[5+6*nx] * 0.6;
 
     for(int i = 0 ; i < ny-1; i++){
      for( int j =0 ; j < nx-1 ; j++){    
