@@ -119,7 +119,7 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
        
                    tmp_image[j+i*nx]  = image[j+i*nx] * 0.6;
                    printf(" i: %d, j: %d",i,j);
-      if(i>0){     tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;}
+     // if(i>0)      {tmp_image[j+i*nx] += image[j+(i-1)*nx]*0.1;}
                    printf("hey\n");
       // if(i<ny-1)  tmp_image[j+i*nx] += image[j+(i+1)*nx] *0.1;
       
