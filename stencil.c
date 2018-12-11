@@ -46,36 +46,36 @@ int main(int argc, char *argv[]) {
   float *image;
 
 
-  if(rank==0){
-    image = _mm_malloc(sizeof(float)*ny*nx,64);
+  // if(rank==0){
+  //   image = _mm_malloc(sizeof(float)*ny*nx,64);
 
-    tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
-    init_image(nx, ny, image, tmp_image);
-  }
+  //   tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
+  //   init_image(nx, ny, image, tmp_image);
+  // }
 
-  //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
+  // //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
 
   printf("size %d \n", rank);
   printf("rank %d running\n", size);
 
-  // Set the input image
+  // // Set the input image
 
-  // Call the stencil kernel
-  double tic = wtime();
-  for (int t = 0; t < niters; ++t) {
-    stencil(nx, ny, section, tmpSection);
-    stencil(nx, ny, tmpSection, section);
-  }
-  double toc = wtime();
+  // // Call the stencil kernel
+  // double tic = wtime();
+  // for (int t = 0; t < niters; ++t) {
+  //   stencil(nx, ny, section, tmpSection);
+  //   stencil(nx, ny, tmpSection, section);
+  // }
+  // double toc = wtime();
 
-  MPI_Finalize();
-  // Output
-  printf("------------------------------------\n");
-  printf(" runtime: %lf s\n", toc-tic);
-  printf("------------------------------------\n");
+  // MPI_Finalize();
+  // // Output
+  // printf("------------------------------------\n");
+  // printf(" runtime: %lf s\n", toc-tic);
+  // printf("------------------------------------\n");
 
-  //output_image(OUTPUT_FILE, nx, ny, image);
-  free(image);
+  // //output_image(OUTPUT_FILE, nx, ny, image);
+  // free(image);
 }
 
 void stencil(const int nx, const int ny,  float *restrict image, float *restrict tmp_image) {
