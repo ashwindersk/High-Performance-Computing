@@ -1,5 +1,5 @@
 stencil: stencil.c
-	mpicc -std=c99 -qopenmp-stubs  -xHost -g -pg -Ofast -Wall $^ -o $@
+	mpiicc -std=c99 -qopenmp-stubs  -xHost -g -pg -Ofast -Wall $^ -o $@
 
 
 
