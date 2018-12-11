@@ -113,9 +113,9 @@ void stencil(const int nx, const int ny, float *restrict image, float *restrict 
     MPI_Recv(lastRowRecv, nx, MPI_FLOAT, rank+1, 0, MPI_COMM_WORLD, status);
 
     //Attempt 1 at implementing
-    printf("value in image %f  value in temp %f\n", image[65535], tmp_image[65535]);
-    for(int i = 0 ; i < ny; i++){
-     for( int j =0 ; j< nx ; j++){    
+    
+    for(int i = 0 ; i < ny-1; i++){
+     for( int j =0 ; j < nx-1 ; j++){    
        printf(" i: %d, j: %d access value: %d\n",i,j, j+i*nx);
                    tmp_image[j+i*nx]  = image[j+i*nx] * 0.6;
                    
