@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
 
   if(rank==0){
-    image =_mm_malloc(sizeof(float)*ny*nx,64);
+    image = _mm_malloc(sizeof(float)*ny*nx,64);
 
     tmp_image = _mm_malloc(sizeof(float)*ny*nx,64);
     init_image(nx, ny, image, tmp_image);
@@ -56,10 +56,9 @@ int main(int argc, char *argv[]) {
   //MPI_Scatter(image, nx , MPI_FLOAT, section, nx , MPI_FLOAT, 0, MPI_COMM_WORLD);
 
   printf("rank %d running\n", rank);
-
+  printf("rank %d running\n", size);
 
   // Set the input image
-  
 
   // Call the stencil kernel
   double tic = wtime();
